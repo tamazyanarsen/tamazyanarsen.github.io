@@ -1,0 +1,18 @@
+@import url(./colors/blue.css);
+@import url(./colors/cyan.css);
+@import url(./colors/green.css);
+@import url(./colors/grey.css);
+@import url(./colors/orange.css);
+@import url(./colors/purple.css);
+@import url(./colors/red.css);
+@import url(./colors/yellow.css);
+
+:root {
+  --common-white: #ffffff;
+  --common-black: #000000;
+  --common-blue: #0185ce;
+
+  --transparent: #d3d4d5;
+
+  --dark: #585d61;
+}

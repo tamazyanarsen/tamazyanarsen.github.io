@@ -45,9 +45,15 @@
 }
 
 .head-5 {
-    font-size: calc(var(--base-font-size) * 6);
-    line-height: calc(var(--base-line-height) * 5);
-    font-weight: var(--base-font-weight);
+  font-size: calc(var(--base-font-size) * 7);
+  line-height: calc(var(--base-line-height) * 5);
+  font-weight: var(--base-font-weight);
+}
+
+.head-6 {
+  font-size: calc(var(--base-font-size) * 6);
+  line-height: calc(var(--base-line-height) * 5);
+  font-weight: var(--base-font-weight);
 }
 
 .body-1 {
@@ -192,12 +198,13 @@
         #input.error {
             border-color: var(--red-120);
         }
-`];var dt,ut=function(t,e,i,s){var r,n=arguments.length,o=n<3?e:null===s?s=Object.getOwnPropertyDescriptor(e,i):s;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)o=Reflect.decorate(t,e,i,s);else for(var l=t.length-1;l>=0;l--)(r=t[l])&&(o=(n<3?r(o):n>3?r(e,i,o):r(e,i))||o);return n>3&&o&&Object.defineProperty(e,i,o),o};class pt extends G{constructor(){super(...arguments),this.classSettings={M:{placeholder:"subtitle-2",inputText:"body-3",height:"calc(var(--base-size) * 12)"},L:{placeholder:"body-3",inputText:"body-2",height:"calc(var(--base-size) * 14)"},S:{placeholder:"body-3",inputText:"body-2",height:"calc(var(--base-size) * 10)"},XS:{placeholder:"body-3",inputText:"body-2",height:"calc(var(--base-size) * 8)"}},this.outline=!1,this.size=ht.M,this.success=!1,this.error=!1,this.placeHolderVisible=!1,this.additionalText="",this.clearButtonVisible=!1}connectedCallback(){super.connectedCallback(),console.log("connectedCallback: ",this.input),setTimeout((()=>{console.log("this.input: ",this.input),this.input}),0)}focusInput(){this.placeHolderVisible=!0,this.clearButtonVisible=!0}blurInput(){this.placeHolderVisible=!!this.input?.value,this.clearButtonVisible=!1}editInput(){this.dispatchEvent(at("input-value",{value:this.input?.value}))}clearInputValue(){this.input&&(this.input.value=""),this.input?.focus()}changeValue(){this.dispatchEvent(at("input-change",{value:this.input?.value}))}}pt.styles=ct,ut([tt({type:Boolean})],pt.prototype,"outline",void 0),ut([tt()],pt.prototype,"size",void 0),ut([tt({type:Boolean})],pt.prototype,"success",void 0),ut([tt({type:Boolean})],pt.prototype,"error",void 0),ut([et()],pt.prototype,"placeHolderVisible",void 0),ut([tt()],pt.prototype,"additionalText",void 0),ut([(dt="#input",(({finisher:t,descriptor:e})=>(i,s)=>{var r;if(void 0===s){const s=null!==(r=i.originalKey)&&void 0!==r?r:i.key,n=null!=e?{kind:"method",placement:"prototype",key:s,descriptor:e(i.key)}:{...i,key:s};return null!=t&&(n.finisher=function(e){t(e,s)}),n}{const r=i.constructor;void 0!==e&&Object.defineProperty(i,s,e(s)),null==t||t(r,s)}})({descriptor:t=>{const e={get(){var t,e;return null!==(e=null===(t=this.renderRoot)||void 0===t?void 0:t.querySelector(dt))&&void 0!==e?e:null},enumerable:!0,configurable:!0};return e}}))],pt.prototype,"input",void 0),ut([et()],pt.prototype,"clearButtonVisible",void 0);let vt=class extends pt{render(){return k`
+`];var dt,ut=function(t,e,i,s){var r,n=arguments.length,o=n<3?e:null===s?s=Object.getOwnPropertyDescriptor(e,i):s;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)o=Reflect.decorate(t,e,i,s);else for(var l=t.length-1;l>=0;l--)(r=t[l])&&(o=(n<3?r(o):n>3?r(e,i,o):r(e,i))||o);return n>3&&o&&Object.defineProperty(e,i,o),o};class pt extends G{constructor(){super(...arguments),this.classSettings={M:{placeholder:"subtitle-2",inputText:"body-3",height:"calc(var(--base-size) * 12)"},L:{placeholder:"body-3",inputText:"body-2",height:"calc(var(--base-size) * 14)"},S:{placeholder:"body-3",inputText:"body-2",height:"calc(var(--base-size) * 10)"},XS:{placeholder:"body-3",inputText:"body-2",height:"calc(var(--base-size) * 8)"}},this.outline=!1,this.size=ht.M,this.success=!1,this.error=!1,this.placeHolderVisible=!1,this.additionalText="",this.clearButtonVisible=!1,this.name=""}connectedCallback(){super.connectedCallback(),console.log("connectedCallback: ",this.input),setTimeout((()=>{console.log("this.input: ",this.input),this.input}),0)}focusInput(){this.placeHolderVisible=!0,this.clearButtonVisible=!0}blurInput(){this.placeHolderVisible=!!this.input?.value,this.clearButtonVisible=!1}editInput(){this.dispatchEvent(at("input-value",{value:this.input?.value}))}clearInputValue(){this.input&&(this.input.value=""),this.input?.focus()}changeValue(){this.dispatchEvent(at("input-change",{value:this.input?.value}))}}pt.styles=ct,ut([tt({type:Boolean})],pt.prototype,"outline",void 0),ut([tt()],pt.prototype,"size",void 0),ut([tt({type:Boolean})],pt.prototype,"success",void 0),ut([tt({type:Boolean})],pt.prototype,"error",void 0),ut([et()],pt.prototype,"placeHolderVisible",void 0),ut([tt()],pt.prototype,"additionalText",void 0),ut([(dt="#input",(({finisher:t,descriptor:e})=>(i,s)=>{var r;if(void 0===s){const s=null!==(r=i.originalKey)&&void 0!==r?r:i.key,n=null!=e?{kind:"method",placement:"prototype",key:s,descriptor:e(i.key)}:{...i,key:s};return null!=t&&(n.finisher=function(e){t(e,s)}),n}{const r=i.constructor;void 0!==e&&Object.defineProperty(i,s,e(s)),null==t||t(r,s)}})({descriptor:t=>{const e={get(){var t,e;return null!==(e=null===(t=this.renderRoot)||void 0===t?void 0:t.querySelector(dt))&&void 0!==e?e:null},enumerable:!0,configurable:!0};return e}}))],pt.prototype,"input",void 0),ut([et()],pt.prototype,"clearButtonVisible",void 0),ut([tt({type:String})],pt.prototype,"name",void 0);let vt=class extends pt{render(){return k`
         <div class="input-wrapper"
         style=${ot({height:this.classSettings[this.size].height})}
         >
             ${this.placeHolderVisible?k`<div class="${nt({[this.classSettings[this.size].placeholder]:!0,"input-placeholder":!0})}">Название сделки</div>`:""}
             <input @focus="${this.focusInput}" @blur="${this.blurInput}"
+            .name=${this.name}
                 @input=${this.editInput}
                 @change=${this.changeValue}
              id="input" class=${nt({[this.classSettings[this.size].inputText]:!0,outline:this.outline,success:this.success,error:this.error})} .placeholder=${this.placeHolderVisible?"":"Название сделки"}>

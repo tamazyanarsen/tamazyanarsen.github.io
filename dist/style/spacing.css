@@ -1,0 +1,11 @@
+:root {
+  --base-space: 4px;
+  --space-4: var(--base-space);
+  --space-8: calc(var(--base-space) * 2);
+  --space-12: calc(var(--base-space) * 3);
+  --space-16: calc(var(--base-space) * 4);
+  --space-20: calc(var(--base-space) * 5);
+  --space-24: calc(var(--base-space) * 6);
+  --space-28: calc(var(--base-space) * 7);
+  --space-32: calc(var(--base-space) * 8);
+}
