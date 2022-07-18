@@ -1,2 +1,118 @@
-hello world
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + Lit App</title>
+  <link rel="stylesheet" href="/src/style/style.css">
+
+  <script type="module" src="/dist/input.bundle.js"></script>
+  <script type="module" src="/dist/dropdown.bundle.js"></script>
+  <script type="module" src="/dist/switch.bundle.js"></script>
+  <script type="module" src="/dist/checkbox.bundle.js"></script>
+  <script type="module" src="/dist/button.bundle.js"></script>
+  <script type="module" src="/dist/icon-button.bundle.js"></script>
+  <script type="module" src="/dist/radiogroup.bundle.js"></script>
+  <script type="module" src="/dist/action.bundle.js"></script>
+</head>
+
+<body>
+  <h3>RadioGroup</h3>
+  <tsc-radio-group grid-rows="1fr" grid-columns="1fr 1fr" name="some-name"></tsc-radio-group>
+
+  <h3>Input</h3>
+  <tsc-input></tsc-input>
+
+  <h3>Dropdown</h3>
+  <tsc-dropdown></tsc-dropdown>
+
+  <h3>Switch</h3>
+  <tsc-switch></tsc-switch>
+
+  <h3>Checkbox</h3>
+  <tsc-checkbox text="some text"></tsc-checkbox>
+
+  <h3>Button</h3>
+  <tsc-button size="XS" text="Привет Мир!"></tsc-button>
+
+  <h3>Icon-button</h3>
+  <div style="display: flex; gap: 1em">
+    <tsc-icon-button size="XS" iconUrl="/assets/images/calendar.svg"></tsc-icon-button>
+    <tsc-icon-button size="XS" style-type="Round"></tsc-icon-button>
+  </div>
+
+  <h3>Action</h3>
+  <tsc-action id="action"></tsc-action>
+  <script>
+    const actionEl = document.getElementById('action');
+    actionEl.options = [{
+      header: 'test',
+      items: {
+        radio1: {
+          type: 'RadioButton',
+          value: '1',
+          label: 'Да'
+        },
+        btn1: {
+          type: 'Button',
+          value: 'Экспортировать'
+        },
+        btn2: {
+          type: 'Button',
+          value: 'Удалить'
+        },
+        radio2: {
+          type: 'RadioButton',
+          value: '2',
+          label: 'Нет'
+        }
+      },
+      useBottomSeparator: true
+    },
+    {
+      header: 'menu',
+      items: {
+        menu1: {
+          type: 'Menu',
+          value: 'Меню1',
+          child: [{
+            items: {
+              menu2: {
+                type: 'Menu',
+                value: 'Меню2'
+              }
+            }
+          }]
+        }
+      },
+      useBottomSeparator: true
+    },
+    {
+      items: {
+        input1: {
+          type: 'Input',
+          value: 'Test'
+        }
+      },
+      useBottomSeparator: true
+    },
+    {
+      items: {
+        input1: {
+          type: 'Checkbox',
+          label: 'Test',
+          value: true
+        }
+      }
+    }
+    ]
+  </script>
+
+  <script>
+    document.querySelector('tsc-radio-group').addEventListener('change', e => console.log('from html', e))
+  </script>
+</body>
+
+</html>
