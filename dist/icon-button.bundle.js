@@ -98,25 +98,25 @@
 `,r`
 .level-1 {
     background: white;
-    box-shadow: 0px calc(var(--base-size) / 4) var(--base-size) rgba(33, 39, 44, 0.1);
+    box-shadow: 0 calc(var(--base-size) / 4) var(--base-size) rgba(33, 39, 44, 0.1);
     border-radius: calc(var(--base-size) * 3 / 2);
 }
 
 .level-2 {
     background: white;
-    box-shadow: 0px calc(var(--base-size) / 4) calc(var(--base-size) * 15 / 4) rgba(33, 39, 44, 0.1);
+    box-shadow: 0 calc(var(--base-size) / 4) calc(var(--base-size) * 15 / 4) rgba(33, 39, 44, 0.1);
     border-radius: calc(var(--base-size) * 3 / 2);
 }
 
 .level-3 {
     background: white;
-    box-shadow: 0px 0px calc(var(--base-size) * 10) rgba(33, 39, 44, 0.1);
+    box-shadow: 0 0 calc(var(--base-size) * 10) rgba(33, 39, 44, 0.1);
     border-radius: calc(var(--base-size) * 3 / 2);
 }
 
 .level-4 {
     background: white;
-    box-shadow: 0px 0px calc(var(--base-size) * 55 / 4) rgba(33, 39, 44, 0.1);
+    box-shadow: 0 0 calc(var(--base-size) * 55 / 4) rgba(33, 39, 44, 0.1);
     border-radius: calc(var(--base-size) * 3 / 2);
 }
 `,r`
