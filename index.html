@@ -19,9 +19,20 @@
   <script type="module" src="dist/action.bundle.js"></script>
   <script type="module" src="dist/spinner.bundle.js"></script>
   <script type="module" src="dist/progressBar.bundle.js"></script>
+  <script type="module" src="dist/tabBar.bundle.js"></script>
+  <script type="module" src="dist/accordion.bundle.js"></script>
 </head>
 
 <body>
+  <h3>Accordion</h3>
+  <tsc-accordion>
+    <div slot="title">some title</div>
+    <div slot="content">some content</div>
+  </tsc-accordion>
+
+  <h3>Tab-bar</h3>
+  <tsc-tab-bar></tsc-tab-bar>
+
   <h3>Progress-bar</h3>
   <div style="width: 400px;">
     <tsc-progress-bar></tsc-progress-bar>
@@ -55,7 +66,9 @@
   </div>
 
   <h3>Action</h3>
-  <tsc-action id="action"></tsc-action>
+  <div style="display: flex; flex-direction: row;">
+    <tsc-action id="action"></tsc-action>
+  </div>
   <script>
     const actionEl = document.getElementById('action');
     actionEl.options = [{
@@ -68,7 +81,8 @@
         },
         btn1: {
           type: 'Button',
-          value: 'Экспортировать'
+          value: 'Экспортировать',
+          imageSrc: '/assets/images/blue-calendar.svg'
         },
         btn2: {
           type: 'Button',
@@ -88,14 +102,43 @@
         menu1: {
           type: 'Menu',
           value: 'Меню1',
-          child: [{
-            items: {
-              menu2: {
-                type: 'Menu',
-                value: 'Меню2'
+          child: [
+            {
+              header: 'menu2',
+              items: {
+                menu2: {
+                  type: 'Menu',
+                  value: 'Меню2',
+                  child: [
+                    {
+                      header: 'menu3',
+                      items: {
+                        radio1: {
+                          type: 'RadioButton',
+                          value: '1',
+                          label: 'Да'
+                        },
+                        btn1: {
+                          type: 'Button',
+                          value: 'Экспортировать',
+                          imageSrc: '/assets/images/blue-calendar.svg'
+                        },
+                        btn2: {
+                          type: 'Button',
+                          value: 'Удалить'
+                        },
+                        radio2: {
+                          type: 'RadioButton',
+                          value: '2',
+                          label: 'Нет'
+                        }
+                      }
+                    }
+                  ]
+                }
               }
             }
-          }]
+          ]
         }
       },
       useBottomSeparator: true
