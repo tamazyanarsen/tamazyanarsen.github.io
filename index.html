@@ -21,9 +21,40 @@
   <script type="module" src="dist/progressBar.bundle.js"></script>
   <script type="module" src="dist/tabBar.bundle.js"></script>
   <script type="module" src="dist/accordion.bundle.js"></script>
+  <script type="module" src="dist/table.bundle.js"></script>
 </head>
 
 <body>
+  <h3>Table</h3>
+  <tsc-table></tsc-table>
+  <script>
+    const el = document.querySelector('tsc-table');
+    const columns = [
+      {
+        label: 'Название',
+        itemProperty: 'name',
+        type: 0,
+        textBackground: 'red',
+        textColor: 'blue',
+        iconPosition: 2,
+        width: '200px'
+      },
+      {
+        label: 'Возраст',
+        itemProperty: 'age',
+        type: 5,
+        listOptions: [{ label: 'вариант 1', value: 'val1' }, { label: 'вариант 2', value: 'val2' }],
+        listInitOption: "val2",
+        textBackground: 'green',
+        textColor: 'orange',
+        iconPosition: 2
+      }
+    ]
+    const items = new Array(20).fill(1).map((e, index) => ({ name: `name${index}`, age: Math.round(Math.random() * 100) }));
+    el.setAttribute('columns', JSON.stringify(columns))
+    el.setAttribute('items', JSON.stringify(items))
+  </script>
+
   <h3>Accordion</h3>
   <tsc-accordion>
     <div slot="title">some title</div>
@@ -66,103 +97,16 @@
   </div>
 
   <h3>Action</h3>
-  <div style="display: flex; flex-direction: row;">
-    <tsc-action id="action"></tsc-action>
+  <div style="display: flex; flex-direction: row; position: relative;">
+    <tsc-action id="action">
+      <tsc-action id="action2" slot="menu1" style="position: absolute; left: 100%">
+        <tsc-action id="action4" slot="menu1_menu1" style="position: absolute; left: 100%">
+        </tsc-action>
+      </tsc-action>
+      <tsc-action id="action3" slot="menu2"></tsc-action>
+    </tsc-action>
   </div>
-  <script>
-    const actionEl = document.getElementById('action');
-    actionEl.options = [{
-      header: 'test',
-      items: {
-        radio1: {
-          type: 'RadioButton',
-          value: '1',
-          label: 'Да'
-        },
-        btn1: {
-          type: 'Button',
-          value: 'Экспортировать',
-          imageSrc: '/assets/images/blue-calendar.svg'
-        },
-        btn2: {
-          type: 'Button',
-          value: 'Удалить'
-        },
-        radio2: {
-          type: 'RadioButton',
-          value: '2',
-          label: 'Нет'
-        }
-      },
-      useBottomSeparator: true
-    },
-    {
-      header: 'menu',
-      items: {
-        menu1: {
-          type: 'Menu',
-          value: 'Меню1',
-          child: [
-            {
-              header: 'menu2',
-              items: {
-                menu2: {
-                  type: 'Menu',
-                  value: 'Меню2',
-                  child: [
-                    {
-                      header: 'menu3',
-                      items: {
-                        radio1: {
-                          type: 'RadioButton',
-                          value: '1',
-                          label: 'Да'
-                        },
-                        btn1: {
-                          type: 'Button',
-                          value: 'Экспортировать',
-                          imageSrc: '/assets/images/blue-calendar.svg'
-                        },
-                        btn2: {
-                          type: 'Button',
-                          value: 'Удалить'
-                        },
-                        radio2: {
-                          type: 'RadioButton',
-                          value: '2',
-                          label: 'Нет'
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          ]
-        }
-      },
-      useBottomSeparator: true
-    },
-    {
-      items: {
-        input1: {
-          type: 'Input',
-          value: 'Test'
-        }
-      },
-      useBottomSeparator: true
-    },
-    {
-      items: {
-        input1: {
-          type: 'Checkbox',
-          label: 'Test',
-          value: true
-        }
-      }
-    }
-    ]
-  </script>
+  <script type="module" src="test/action-test-config.js"></script>
 
   <script>
     document.querySelector('tsc-radio-group').addEventListener('change', e => console.log('from html', e))
