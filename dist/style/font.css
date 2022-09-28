@@ -87,3 +87,10 @@
   line-height: calc(var(--base-line-height) * 14 / 3);
   font-weight: var(--base-font-weight);
 }
+
+.error-text {
+  font-size: calc(var(--base-font-size) * 7);
+  line-height: calc(var(--base-line-height) * 5);
+  font-weight: calc(var(--base-font-weight) * 4 / 5);
+  color: var(--red-120);
+}

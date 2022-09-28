@@ -1,11 +1,17 @@
 :root {
   --base-space: 4px;
+  --space-1: calc(var(--base-space) / 4);
   --space-4: var(--base-space);
+  --space-6: calc(var(--base-space) / 2 * 3);
   --space-8: calc(var(--base-space) * 2);
+  --space-10: calc(var(--base-space) / 2 * 5);
   --space-12: calc(var(--base-space) * 3);
+  --space-14: calc(var(--base-space) / 2 * 7);
   --space-16: calc(var(--base-space) * 4);
+  --space-18: calc(var(--base-space) / 2 * 9);
   --space-20: calc(var(--base-space) * 5);
   --space-24: calc(var(--base-space) * 6);
   --space-28: calc(var(--base-space) * 7);
   --space-32: calc(var(--base-space) * 8);
+  --space-76: calc(var(--base-space) * 19);
 }
