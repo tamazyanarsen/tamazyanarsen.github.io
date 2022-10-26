@@ -2,39 +2,26 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/components/base/input/config/constants.ts":
-/*!*******************************************************!*\
-  !*** ./src/components/base/input/config/constants.ts ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "InputEventName": () => (/* binding */ InputEventName),
-/* harmony export */   "changeEventName": () => (/* binding */ changeEventName),
-/* harmony export */   "inputEventName": () => (/* binding */ inputEventName)
-/* harmony export */ });
-const inputEventName = 'input-value';
-const changeEventName = 'input-change';
-const InputEventName = {
-    changeEventName: 'input-change',
-    inputEventName: 'input-value',
-    clearEventName: 'input-clear'
-};
-
-
-/***/ }),
-
-/***/ "./src/components/base/input/config/types.ts":
+/***/ "./src/components/button/config/constants.ts":
 /*!***************************************************!*\
-  !*** ./src/components/base/input/config/types.ts ***!
+  !*** ./src/components/button/config/constants.ts ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "BaseStyleType": () => (/* binding */ BaseStyleType),
+/* harmony export */   "CHECKMARK_TEMPLATE": () => (/* binding */ CHECKMARK_TEMPLATE),
+/* harmony export */   "IconStyleType": () => (/* binding */ IconStyleType),
 /* harmony export */   "Size": () => (/* binding */ Size)
 /* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+
+const CHECKMARK_TEMPLATE = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 9L7.125 13.125L15 5.25" stroke="white" stroke-width="2" />
+</svg>
+`;
 var Size;
 (function (Size) {
     Size["M"] = "M";
@@ -43,383 +30,107 @@ var Size;
     Size["XS"] = "XS";
     Size["XXS"] = "XXS";
 })(Size || (Size = {}));
-
-
-/***/ }),
-
-/***/ "./src/components/base/input/config/utils.ts":
-/*!***************************************************!*\
-  !*** ./src/components/base/input/config/utils.ts ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addMaskingCheck": () => (/* binding */ addMaskingCheck)
-/* harmony export */ });
-const addMaskingCheck = (inputElement, mask, maskSlot) => {
-    const maskChars = mask.split('');
-    inputElement.addEventListener('keypress', (event) => {
-        if (mask.length <= inputElement.value.length) {
-            event.preventDefault();
-            return;
-        }
-        const { value, selectionStart, selectionEnd } = inputElement;
-        if (selectionStart !== null && selectionEnd !== null) {
-            if (!maskSlot.includes(maskChars[selectionEnd])) {
-                const t = maskChars
-                    .slice(selectionEnd)
-                    .findIndex((char) => maskSlot.includes(char));
-                if (t < 0) {
-                    inputElement.value =
-                        value + maskChars.slice(selectionEnd).join('');
-                    event.preventDefault();
-                }
-                else
-                    inputElement.value =
-                        value +
-                            maskChars
-                                .slice(selectionEnd, t + selectionEnd)
-                                .join('');
-            }
-        }
-    });
+var BaseStyleType;
+(function (BaseStyleType) {
+    BaseStyleType["DEFAULT"] = "Default";
+    BaseStyleType["OUTLINE"] = "Outline";
+    BaseStyleType["FLAT"] = "Flat";
+})(BaseStyleType || (BaseStyleType = {}));
+const IconStyleType = {
+    ...BaseStyleType,
+    ROUND: 'Round'
 };
 
 
 /***/ }),
 
-/***/ "./src/components/base/input/input-base.ts":
-/*!*************************************************!*\
-  !*** ./src/components/base/input/input-base.ts ***!
-  \*************************************************/
+/***/ "./src/components/paginator/config/constants.ts":
+/*!******************************************************!*\
+  !*** ./src/components/paginator/config/constants.ts ***!
+  \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "InputBase": () => (/* binding */ InputBase)
+/* harmony export */   "ROWS_PER_PAGE_OPTIONS": () => (/* binding */ ROWS_PER_PAGE_OPTIONS),
+/* harmony export */   "pageChangeEventName": () => (/* binding */ pageChangeEventName)
 /* harmony export */ });
-/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
-/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
-/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/other/event */ "./src/components/utils/other/event.ts");
-/* harmony import */ var _config_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./config/constants */ "./src/components/base/input/config/constants.ts");
-/* harmony import */ var _config_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./config/types */ "./src/components/base/input/config/types.ts");
-/* harmony import */ var _config_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./config/utils */ "./src/components/base/input/config/utils.ts");
-/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./style */ "./src/components/base/input/style.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-
-class InputBase extends lit__WEBPACK_IMPORTED_MODULE_0__.LitElement {
-    constructor() {
-        super(...arguments);
-        this.outline = false;
-        this.size = _config_types__WEBPACK_IMPORTED_MODULE_4__.Size.M;
-        this.success = false;
-        this.error = false;
-        this.disabled = false;
-        this.value = '';
-        this.mask = '';
-        this.maskSlot = '';
-        this.placeholder = '';
-        this.additionalText = '';
-        this.clearButtonExist = true;
-        this.placeHolderVisible = false;
-        this.clearButtonVisible = false;
-        this.name = '';
-        this.classSettings = {
-            XXS: {
-                placeholder: 'body-3',
-                inputText: 'body-3',
-                className: 'xxs-input'
-            },
-            XS: {
-                placeholder: 'body-3',
-                inputText: 'body-3',
-                className: 'xs-input'
-            },
-            S: {
-                placeholder: 'body-3',
-                inputText: 'body-3',
-                className: 's-input'
-            },
-            M: {
-                placeholder: 'subtitle-2',
-                inputText: 'body-3',
-                className: 'm-input'
-            },
-            L: {
-                placeholder: 'body-3',
-                inputText: 'body-2',
-                className: 'l-input'
-            }
-        };
-    }
-    connectedCallback() {
-        super.connectedCallback();
-        console.log('connectedCallback: ', this.input);
-        setTimeout(() => {
-            if (this.input) {
-            }
-        }, 0);
-    }
-    focusInput() {
-        this.placeHolderVisible = true;
-        this.clearButtonVisible = true;
-    }
-    blurInput() {
-        this.placeHolderVisible = !!this.input?.value;
-        this.clearButtonVisible = false;
-    }
-    editInput() {
-        this.value = this.input?.value || '';
-        const detail = { value: this.input?.value };
-        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_2__.createEvent)(_config_constants__WEBPACK_IMPORTED_MODULE_3__.InputEventName.inputEventName, { detail }));
-    }
-    clearInputValue() {
-        if (this.input)
-            this.input.value = '';
-        this.input?.focus();
-        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_2__.createEvent)(_config_constants__WEBPACK_IMPORTED_MODULE_3__.InputEventName.clearEventName));
-    }
-    changeValue() {
-        const detail = { value: this.input?.value };
-        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_2__.createEvent)(_config_constants__WEBPACK_IMPORTED_MODULE_3__.InputEventName.changeEventName, { detail }));
-    }
-    firstUpdated() {
-        if (this.input && this.mask && this.maskSlot) {
-            (0,_config_utils__WEBPACK_IMPORTED_MODULE_5__.addMaskingCheck)(this.input, this.mask, this.maskSlot);
-        }
-    }
-}
-InputBase.styles = _style__WEBPACK_IMPORTED_MODULE_6__.stylesBase;
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean })
-], InputBase.prototype, "outline", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)()
-], InputBase.prototype, "size", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean })
-], InputBase.prototype, "success", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean })
-], InputBase.prototype, "error", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean })
-], InputBase.prototype, "disabled", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)()
-], InputBase.prototype, "value", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)()
-], InputBase.prototype, "mask", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ attribute: 'mask-slot' })
-], InputBase.prototype, "maskSlot", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)()
-], InputBase.prototype, "placeholder", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)()
-], InputBase.prototype, "additionalText", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean, attribute: 'clear-button-exist' })
-], InputBase.prototype, "clearButtonExist", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.state)()
-], InputBase.prototype, "placeHolderVisible", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.query)('#input')
-], InputBase.prototype, "input", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.state)()
-], InputBase.prototype, "clearButtonVisible", void 0);
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
-], InputBase.prototype, "name", void 0);
+const ROWS_PER_PAGE_OPTIONS = [
+    { value: 5, label: '5' },
+    { value: 10, label: '10' },
+    { value: 20, label: '20' },
+    { value: 30, label: '30' }
+];
+const pageChangeEventName = 'page-change';
 
 
 /***/ }),
 
-/***/ "./src/components/base/input/style.ts":
-/*!********************************************!*\
-  !*** ./src/components/base/input/style.ts ***!
-  \********************************************/
+/***/ "./src/components/paginator/style.ts":
+/*!*******************************************!*\
+  !*** ./src/components/paginator/style.ts ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "stylesBase": () => (/* binding */ stylesBase)
+/* harmony export */   "paginatorStyles": () => (/* binding */ paginatorStyles)
 /* harmony export */ });
 /* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
-/* harmony import */ var _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/css/css-utils */ "./src/components/utils/css/css-utils.ts");
+/* harmony import */ var _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/css/css-utils */ "./src/components/utils/css/css-utils.ts");
 
 
-const stylesBase = [
+const paginatorStyles = [
     _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__.baseCSS,
     lit__WEBPACK_IMPORTED_MODULE_0__.css `
-      .input-container {
-        width: min(22em, 100%);
-      }
+        .paginator-container {
+            display: flex;
+            align-items: center;
+        }
 
-      .input-wrapper {
-        display: flex;
-        align-items: center;
-        height: calc(var(--base-size) * 12);
-        position: relative;
-      }
+        .nav-button {
+            cursor: pointer;
+            width: var(--space-32);
+            height: var(--space-32);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-      .xxs-input .input-wrapper {
-        height: calc(var(--base-size) * 8);
-      }
+        .nav-button:hover {
+            background-color: var(--grey-10);
+        }
 
-      .xs-input .input-wrapper {
-        height: calc(var(--base-size) * 8);
-      }
+        .pages-container {
+            display: flex;
+            align-items: baseline;
+            margin: var(--space-14);
+        }
 
-      .s-input .input-wrapper {
-        height: calc(var(--base-size) * 10);
-      }
+        .page-count-bar span {
+            color: var(--grey-80);
+        }
 
-      .m-input .input-wrapper {
-        height: calc(var(--base-size) * 12);
-      }
+        .selected-page-input {
+            width: var(--space-40);
+            height: var(--space-32);
+        }
 
-      .l-input .input-wrapper {
-        height: calc(var(--base-size) * 14);
-      }
+        .selected-page-of {
+            color: var(--grey-80);
+            margin: var(--space-8);
+        }
 
-      #input {
-        width: 100%;
-        border: none;
-        border-bottom: calc(var(--base-size) / 4) solid var(--grey-30);
-        color: var(--grey-200);
-        outline: none;
-      }
+        .disabled {
+            pointer-events: none;
+        }
 
-      #input:disabled {
-        color: var(--grey-100);
-        background-color: var(--grey-10);
-        border-radius: var(--border-radius-4) var(--border-radius-4) 0 0;
-        border-bottom: calc(var(--base-size) / 4) solid var(--grey-30);
-        cursor: not-allowed;
-        pointer-events: none;
-      }
-
-      #input::placeholder {
-        color: var(--grey-100);
-        opacity: 1;
-      }
-
-      .xxs-input #input {
-        padding: var(--space-6) var(--space-8);
-      }
-
-      .xs-input #input {
-        padding: var(--space-6) var(--space-12);
-      }
-
-      .s-input #input {
-        padding: var(--space-10) var(--space-12) var(--space-12);
-      }
-
-      .m-input #input {
-        padding: var(--space-24) var(--space-12) var(--space-6);
-      }
-
-      .m-input #input.empty:not(:focus) {
-        padding: var(--space-14) var(--space-12) var(--space-16);
-      }
-
-      .l-input #input {
-        padding: var(--space-28) var(--space-12) var(--space-8);
-      }
-
-      .l-input #input.empty:not(:focus) {
-        padding: var(--space-18) var(--space-12) var(--space-16);
-      }
-
-      #input:not(:disabled):hover {
-        border-bottom: calc(var(--base-size) / 4) solid var(--grey-100);
-      }
-
-      #input:focus {
-        border-bottom: calc(var(--base-size) / 4) solid var(--blue-120);
-      }
-
-      .input-placeholder {
-        position: absolute;
-        padding-left: var(--space-12);
-        color: var(--grey-100);
-        top: var(--space-8);
-      }
-
-      .clear-button {
-        display: none;
-        margin-left: calc(var(--space-24) * -1);
-        cursor: pointer;
-      }
-
-      .input-wrapper:not(.disabled):hover .clear-button {
-        display: flex !important;
-      }
-
-      #input.outline {
-        border: calc(var(--base-size) / 4) solid var(--grey-30);
-        border-radius: var(--border-radius-4);
-        outline: none;
-      }
-
-      #input:hover.outline {
-        border: calc(var(--base-size) / 4) solid var(--grey-100);
-      }
-
-      #input:focus.outline {
-        border: calc(var(--base-size) / 4) solid var(--blue-120);
-      }
-
-      #input.disabled.outline {
-        border: calc(var(--base-size) / 4) solid var(--grey-30);
-      }
-
-      .additional-text {
-        color: var(--grey-100);
-        margin-top: var(--space-6);
-      }
-
-      .xxs-input .additional-text {
-        margin-top: var(--space-4);
-      }
-
-      .xs-input .additional-text {
-        margin-top: var(--space-4);
-      }
-
-      .additional-text.success {
-        color: var(--green-100);
-      }
-
-      .additional-text.error {
-        color: var(--red-100);
-      }
-
-      #input.success {
-        border-color: var(--green-120);
-      }
-
-      #input.error {
-        border-color: var(--red-120);
-      }
+        #dropdown {
+            height: var(--space-32);
+            width: calc(var(--space-18) * 3);
+            margin-left: var(--space-14);
+        }
     `
 ];
 
@@ -735,6 +446,96 @@ const createEvent = (eventName, payload) => new CustomEvent(eventName, {
     ...payload?.eventOption,
     detail: payload?.detail,
 });
+
+
+/***/ }),
+
+/***/ "./src/components/utils/other/icons.ts":
+/*!*********************************************!*\
+  !*** ./src/components/utils/other/icons.ts ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "arrowIcon": () => (/* binding */ arrowIcon),
+/* harmony export */   "calendarIcon": () => (/* binding */ calendarIcon),
+/* harmony export */   "clearIcon": () => (/* binding */ clearIcon),
+/* harmony export */   "closeIcon": () => (/* binding */ closeIcon),
+/* harmony export */   "leftArrowIcon": () => (/* binding */ leftArrowIcon),
+/* harmony export */   "leftDoubleArrowIcon": () => (/* binding */ leftDoubleArrowIcon),
+/* harmony export */   "rightArrowIcon": () => (/* binding */ rightArrowIcon),
+/* harmony export */   "rightDoubleArrowIcon": () => (/* binding */ rightDoubleArrowIcon),
+/* harmony export */   "smallArrowIcon": () => (/* binding */ smallArrowIcon),
+/* harmony export */   "warningIcon": () => (/* binding */ warningIcon)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+
+const warningIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_17396_8290)">
+            <circle cx="10.0002" cy="10" r="8.33333" stroke="#F5A700" stroke-width="1.66667" />
+            <path d="M10 5L10 11.6667M10 15L10 13.3333" stroke="#F5A700" stroke-width="1.66667" />
+        </g>
+        <defs>
+            <clipPath id="clip0_17396_8290">
+                <rect width="20" height="20" fill="white" />
+            </clipPath>
+        </defs>
+    </svg>
+`;
+const calendarIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.5 7.45837V4.16671C17.5 3.70647 17.1269 3.33337 16.6667 3.33337H14.1667M17.5 7.45837H2.5M17.5 7.45837V16.6667C17.5 17.1269 17.1269 17.5 16.6667 17.5H3.33333C2.8731 17.5 2.5 17.1269 2.5 16.6667V7.45837M2.5 7.45837V4.16671C2.5 3.70647 2.8731 3.33337 3.33333 3.33337H5.83333M5.83333 3.33337V0.833374M5.83333 3.33337H14.1667M14.1667 3.33337V0.833374"
+              stroke="#99A5B3" stroke-width="1.66667" />
+    </svg>
+`;
+const closeIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.6568 6.34314L12 12M12 12L6.34314 17.6568M12 12L17.6568 17.6568M12 12L6.34314 6.34314" stroke-width="2"/>
+    </svg>
+`;
+const arrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.5 5.83337L10 13.3334L17.5 5.83337" stroke="#C0C8D0" stroke-width="2" />
+    </svg>
+`;
+const smallArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M8.00021 12.2761L14.4716 5.80472L13.5288 4.86191L8.00021 10.3905L2.47162 4.86191L1.52881 5.80472L8.00021 12.2761Z"
+            fill="#788694"
+        />
+    </svg>
+`;
+const clearIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.714 1.28595L6 6M6 6L1.28595 10.714M6 6L10.714 10.714M6 6L1.28595 1.28595"
+                stroke="#C0C8D0" stroke-width="2"/>
+    </svg>
+`;
+const leftDoubleArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 14L8 8L14 2" stroke="#788694" stroke-width="1.33333"/>
+        <path d="M8 14L2 8L8 2" stroke="#788694" stroke-width="1.33333"/>
+    </svg>
+`;
+const leftArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11.3333 14L5.33325 8L11.3333 2" stroke="#788694" stroke-width="1.33333"/>
+    </svg>
+`;
+const rightDoubleArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 14L8 8L2 2" stroke="#788694" stroke-width="1.33333"/>
+        <path d="M8 14L14 8L8 2" stroke="#788694" stroke-width="1.33333"/>
+    </svg>
+`;
+const rightArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.66675 14L10.6667 8L4.66675 2" stroke="#788694" stroke-width="1.33333"/>
+    </svg>
+`;
 
 
 /***/ }),
@@ -3142,122 +2943,6 @@ const classMap = (0,_directive_js__WEBPACK_IMPORTED_MODULE_1__.directive)(ClassM
 
 /***/ }),
 
-/***/ "./node_modules/lit-html/development/directives/style-map.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/lit-html/development/directives/style-map.js ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "styleMap": () => (/* binding */ styleMap)
-/* harmony export */ });
-/* harmony import */ var _lit_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lit-html.js */ "./node_modules/lit-html/development/lit-html.js");
-/* harmony import */ var _directive_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../directive.js */ "./node_modules/lit-html/development/directive.js");
-/**
- * @license
- * Copyright 2018 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
-
-class StyleMapDirective extends _directive_js__WEBPACK_IMPORTED_MODULE_1__.Directive {
-    constructor(partInfo) {
-        var _a;
-        super(partInfo);
-        if (partInfo.type !== _directive_js__WEBPACK_IMPORTED_MODULE_1__.PartType.ATTRIBUTE ||
-            partInfo.name !== 'style' ||
-            ((_a = partInfo.strings) === null || _a === void 0 ? void 0 : _a.length) > 2) {
-            throw new Error('The `styleMap` directive must be used in the `style` attribute ' +
-                'and must be the only part in the attribute.');
-        }
-    }
-    render(styleInfo) {
-        return Object.keys(styleInfo).reduce((style, prop) => {
-            const value = styleInfo[prop];
-            if (value == null) {
-                return style;
-            }
-            // Convert property names from camel-case to dash-case, i.e.:
-            //  `backgroundColor` -> `background-color`
-            // Vendor-prefixed names need an extra `-` appended to front:
-            //  `webkitAppearance` -> `-webkit-appearance`
-            // Exception is any property name containing a dash, including
-            // custom properties; we assume these are already dash-cased i.e.:
-            //  `--my-button-color` --> `--my-button-color`
-            prop = prop
-                .replace(/(?:^(webkit|moz|ms|o)|)(?=[A-Z])/g, '-$&')
-                .toLowerCase();
-            return style + `${prop}:${value};`;
-        }, '');
-    }
-    update(part, [styleInfo]) {
-        const { style } = part.element;
-        if (this._previousStyleProperties === undefined) {
-            this._previousStyleProperties = new Set();
-            for (const name in styleInfo) {
-                this._previousStyleProperties.add(name);
-            }
-            return this.render(styleInfo);
-        }
-        // Remove old properties that no longer exist in styleInfo
-        // We use forEach() instead of for-of so that re don't require down-level
-        // iteration.
-        this._previousStyleProperties.forEach((name) => {
-            // If the name isn't in styleInfo or it's null/undefined
-            if (styleInfo[name] == null) {
-                this._previousStyleProperties.delete(name);
-                if (name.includes('-')) {
-                    style.removeProperty(name);
-                }
-                else {
-                    // Note reset using empty string (vs null) as IE11 does not always
-                    // reset via null (https://developer.mozilla.org/en-US/docs/Web/API/ElementCSSInlineStyle/style#setting_styles)
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    style[name] = '';
-                }
-            }
-        });
-        // Add or update properties
-        for (const name in styleInfo) {
-            const value = styleInfo[name];
-            if (value != null) {
-                this._previousStyleProperties.add(name);
-                if (name.includes('-')) {
-                    style.setProperty(name, value);
-                }
-                else {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    style[name] = value;
-                }
-            }
-        }
-        return _lit_html_js__WEBPACK_IMPORTED_MODULE_0__.noChange;
-    }
-}
-/**
- * A directive that applies CSS properties to an element.
- *
- * `styleMap` can only be used in the `style` attribute and must be the only
- * expression in the attribute. It takes the property names in the
- * {@link StyleInfo styleInfo} object and adds the property values as CSS
- * properties. Property names with dashes (`-`) are assumed to be valid CSS
- * property names and set on the element's style object using `setProperty()`.
- * Names without dashes are assumed to be camelCased JavaScript property names
- * and set on the element's style object using property assignment, allowing the
- * style object to translate JavaScript-style names to CSS property names.
- *
- * For example `styleMap({backgroundColor: 'red', 'border-top': '5px', '--size':
- * '0'})` sets the `background-color`, `border-top` and `--size` properties.
- *
- * @param styleInfo
- * @see {@link https://lit.dev/docs/templates/directives/#stylemap styleMap code samples on Lit.dev}
- */
-const styleMap = (0,_directive_js__WEBPACK_IMPORTED_MODULE_1__.directive)(StyleMapDirective);
-//# sourceMappingURL=style-map.js.map
-
-/***/ }),
-
 /***/ "./node_modules/lit-html/development/lit-html.js":
 /*!*******************************************************!*\
   !*** ./node_modules/lit-html/development/lit-html.js ***!
@@ -4804,23 +4489,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/lit/directives/style-map.js":
-/*!**************************************************!*\
-  !*** ./node_modules/lit/directives/style-map.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "styleMap": () => (/* reexport safe */ lit_html_directives_style_map_js__WEBPACK_IMPORTED_MODULE_0__.styleMap)
-/* harmony export */ });
-/* harmony import */ var lit_html_directives_style_map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-html/directives/style-map.js */ "./node_modules/lit-html/development/directives/style-map.js");
-
-//# sourceMappingURL=style-map.js.map
-
-
-/***/ }),
-
 /***/ "./node_modules/lit/index.js":
 /*!***********************************!*\
   !*** ./node_modules/lit/index.js ***!
@@ -4916,20 +4584,23 @@ __webpack_require__.r(__webpack_exports__);
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***************************************!*\
-  !*** ./src/components/input/input.ts ***!
-  \***************************************/
+/*!***********************************************!*\
+  !*** ./src/components/paginator/paginator.ts ***!
+  \***********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Input": () => (/* binding */ Input)
+/* harmony export */   "Paginator": () => (/* binding */ Paginator)
 /* harmony export */ });
-/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
-/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
-/* harmony import */ var lit_directives_style_map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/directives/style-map.js */ "./node_modules/lit/directives/style-map.js");
-/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
-/* harmony import */ var _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../base/input/config/types */ "./src/components/base/input/config/types.ts");
-/* harmony import */ var _base_input_input_base__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../base/input/input-base */ "./src/components/base/input/input-base.ts");
+/* harmony import */ var _utils_other_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../utils/other/icons */ "./src/components/utils/other/icons.ts");
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+/* harmony import */ var _button_config_constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../button/config/constants */ "./src/components/button/config/constants.ts");
 /* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
+/* harmony import */ var _config_constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./config/constants */ "./src/components/paginator/config/constants.ts");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./style */ "./src/components/paginator/style.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4943,78 +4614,132 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-const tagName = _shared_types__WEBPACK_IMPORTED_MODULE_3__.Selector.Input;
-let Input = class Input extends _base_input_input_base__WEBPACK_IMPORTED_MODULE_5__.InputBase {
-    get clearButton() {
-        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
-            <div class="clear-button"
-                 @click=${this.clearInputValue}
-                 style=${(0,lit_directives_style_map_js__WEBPACK_IMPORTED_MODULE_2__.styleMap)({
-            display: this.clearButtonVisible ? 'flex' : 'none',
-        })}>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10.714 1.28595L6 6M6 6L1.28595 10.714M6 6L10.714 10.714M6 6L1.28595 1.28595"
-                          stroke="#C0C8D0" stroke-width="2"/>
-                </svg>
-            </div>
+
+
+
+let Paginator = class Paginator extends lit__WEBPACK_IMPORTED_MODULE_1__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.totalRecords = 0;
+        this.rows = 5;
+        this.first = 0;
+        this.rowsPerPageOptions = _config_constants__WEBPACK_IMPORTED_MODULE_8__.ROWS_PER_PAGE_OPTIONS;
+        this._currentPage = 1;
+        this._pageCount = 0;
+    }
+    get pageInputTemplate() {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <tsc-input-number
+                class="selected-page-input"
+                .value=${this._currentPage.toString()}
+                .size=${_button_config_constants__WEBPACK_IMPORTED_MODULE_5__.Size.XS}
+                .clearButtonExist=${false}
+                .min=${'1'}
+                .max=${this._pageCount.toString()}
+                ?outline=${true}
+                @input-change=${(event) => this.changePage(event.detail.value)}
+                >
+            </tsc-input-number>
         `;
+    }
+    get rowsDropdownTemplate() {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <tsc-dropdown
+                id="dropdown"
+                .items=${this.rowsPerPageOptions}
+                .initValue=${this.rows}
+                .size=${_button_config_constants__WEBPACK_IMPORTED_MODULE_5__.Size.XXS}
+                .readonlyInput=${true}
+                ?outline=${true}
+                @input-change=${(rowsCount) => this.rowsCountChange(rowsCount)}>
+            </tsc-dropdown>
+        `;
+    }
+    willUpdate(changedProperties) {
+        if (changedProperties.has('totalRecords') || changedProperties.has('rows')) {
+            this.updatePaginatorState();
+        }
     }
     render() {
-        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
-            <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
-            'input-container': true,
-            [this.classSettings[this.size].className]: true,
-            'disabled': this.disabled
-        })}>
-                <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
-            'input-wrapper': true,
-            disabled: this.disabled
-        })}">
-                    ${this.placeHolderVisible && (this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.M || this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L) ? lit__WEBPACK_IMPORTED_MODULE_0__.html `
-                        <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
-            [this.classSettings[this.size].placeholder]: true,
-            'input-placeholder': true
-        })}">${this.placeholder}
-                        </div>` : ''}
-                    <input @focus="${this.focusInput}"
-                           @blur="${this.blurInput}"
-                           .name=${this.name}
-                           @input=${this.editInput}
-                           @change=${this.changeValue}
-                           ?disabled=${this.disabled}
-                           id="input"
-                           class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
-            [this.classSettings[this.size].inputText]: true,
-            outline: this.outline,
-            success: this.success,
-            error: this.error,
-            'empty': !this.input?.value
-        })}
-                           .placeholder=${this.placeHolderVisible ? '' : this.placeholder}
-                           .value=${this.value}
-                    />
-                    ${this.clearButton}
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <div class="paginator-container">
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({ disabled: this._currentPage === 1, 'nav-button': true })} @click=${() => this.changePage(1)}>
+                    ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_0__.leftDoubleArrowIcon}
                 </div>
-                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
-            'subtitle-2': this.size !== _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L,
-            'body-3': this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L,
-            'additional-text': true,
-            success: this.success,
-            error: this.error
-        })}>
-                    ${this.additionalText}
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({ disabled: this._currentPage === 1, 'nav-button': true })} @click=${() => this.changePage(this._currentPage - 1)}>
+                    ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_0__.leftArrowIcon}
                 </div>
+                <div class="pages-container">
+                    ${this.pageInputTemplate}
+                    <!-- TODO: localization -->
+                    <span class="selected-page-of">из</span>
+                    <span class="body-3">${this._pageCount}</span>
+                </div>
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({ disabled: this._currentPage === this._pageCount, 'nav-button': true })} @click=${() => this.changePage(this._currentPage + 1)}>
+                    ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_0__.rightArrowIcon}
+                </div>
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({ disabled: this._currentPage === this._pageCount, 'nav-button': true })} @click=${() => this.changePage(this._pageCount)}>
+                    ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_0__.rightDoubleArrowIcon}
+                </div>
+                ${this.rowsDropdownTemplate}
             </div>
         `;
     }
+    getPageCount() {
+        return Math.ceil(this.totalRecords / this.rows);
+    }
+    getCurrentPage() {
+        return Math.ceil(this.first / this.rows) || 1;
+    }
+    getFirstRow() {
+        return (this._currentPage - 1) * this.rows;
+    }
+    rowsCountChange(rows) {
+        this.rows = Number(rows.detail.value);
+        this.updatePaginatorState();
+        this.emitChangePage();
+    }
+    updatePaginatorState() {
+        this._pageCount = this.getPageCount();
+        this._currentPage = this.getCurrentPage();
+        this.first = this.getFirstRow();
+    }
+    changePage(page) {
+        this._currentPage = page;
+        this.first = this.getFirstRow();
+        this.emitChangePage();
+    }
+    emitChangePage() {
+        const detail = { page: this._currentPage, rows: this.rows, first: this.first };
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_7__.createEvent)(_config_constants__WEBPACK_IMPORTED_MODULE_8__.pageChangeEventName, { detail }));
+    }
 };
-Input = __decorate([
-    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_6__.customElementRegistry)(tagName)
-], Input);
+Paginator.styles = _style__WEBPACK_IMPORTED_MODULE_9__.paginatorStyles;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)({ type: Number, attribute: 'total-records' })
+], Paginator.prototype, "totalRecords", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)({ type: Number })
+], Paginator.prototype, "rows", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)({ type: Number })
+], Paginator.prototype, "first", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)({ type: Array })
+], Paginator.prototype, "rowsPerPageOptions", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.state)()
+], Paginator.prototype, "_currentPage", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.state)()
+], Paginator.prototype, "_pageCount", void 0);
+Paginator = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_6__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_4__.Selector.Paginator)
+], Paginator);
 
 
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=input.bundle.js.map
+//# sourceMappingURL=paginator.bundle.js.map

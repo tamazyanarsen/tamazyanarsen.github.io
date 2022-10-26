@@ -4463,6 +4463,434 @@ Accordion = __decorate([
 
 /***/ }),
 
+/***/ "./src/components/action/action.ts":
+/*!*****************************************!*\
+  !*** ./src/components/action/action.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Action": () => (/* binding */ Action)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var lit_directives_ref_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/directives/ref.js */ "./node_modules/lit/directives/ref.js");
+/* harmony import */ var lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lit/static-html.js */ "./node_modules/lit/static-html.js");
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _base_input_config_constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../base/input/config/constants */ "./src/components/base/input/config/constants.ts");
+/* harmony import */ var _base_input_config_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../base/input/config/types */ "./src/components/base/input/config/types.ts");
+/* harmony import */ var _utils_components_radiobutton_render__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/components/radiobutton-render */ "./src/components/utils/components/radiobutton-render.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
+/* harmony import */ var _config_constants__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./config/constants */ "./src/components/action/config/constants.ts");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./style */ "./src/components/action/style.ts");
+/* harmony import */ var _button_button__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../button/button */ "./src/components/button/button.ts");
+/* harmony import */ var _checkbox_checkbox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../checkbox/checkbox */ "./src/components/checkbox/checkbox.ts");
+/* harmony import */ var _input_input__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../input/input */ "./src/components/input/input.ts");
+/* harmony import */ var _radiobutton_radiobutton__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../radiobutton/radiobutton */ "./src/components/radiobutton/radiobutton.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let Action = class Action extends lit__WEBPACK_IMPORTED_MODULE_0__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.menuOpenOptions = _config_constants__WEBPACK_IMPORTED_MODULE_10__.OpenOptions.RIGHT;
+        this.options = [];
+    }
+    render() {
+        return lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+            <div class="level-2 action-container border-radius-4">
+                ${this.options?.map((option, index) => {
+            const resultTemplate = [];
+            const headerTemplate = option.header
+                ? lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `<h1 class="action-header overline">
+                                ${option.header}
+                            </h1>`
+                : lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html ``;
+            resultTemplate.push(lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+                        <div class="action-block">
+                            ${headerTemplate}
+                            ${this.getActionItemsTemplate(option, index.toString())}
+                        </div>
+                    `);
+            if (option.useBottomSeparator) {
+                resultTemplate.push(lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+                                    <div class="action-separator"></div>`);
+            }
+            return lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `${resultTemplate}`;
+        })}
+            </div>
+        `;
+    }
+    getActionItemsTemplate(option, idBlock) {
+        const radioGroupItems = [];
+        return lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `${Object.entries(option.items).map(([key, item]) => {
+            const iconTemplate = item.imageSrc
+                ? lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `<img class="action-item__icon" .src="${item.imageSrc}"/>`
+                : lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html ``;
+            const itemTemplate = [];
+            switch (item.type) {
+                case _config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionItemType.BUTTON:
+                    itemTemplate.push(iconTemplate, this._buttonTemplate(item));
+                    break;
+                case _config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionItemType.MENU:
+                    itemTemplate.push(iconTemplate, this._menuTemplate(key, item));
+                    break;
+                case _config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionItemType.INPUT:
+                    itemTemplate.push(iconTemplate, this._inputTemplate());
+                    break;
+                case _config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionItemType.CHECKBOX:
+                    itemTemplate.push(iconTemplate, this._checkboxTemplate(item));
+                    break;
+                case _config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionItemType.RADIO_BUTTON:
+                    radioGroupItems.push({ key, item });
+                    break;
+                case _config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionItemType.CALENDAR:
+                    break;
+                default:
+            }
+            return itemTemplate.length > 0
+                ? lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `${this._itemTemplate(itemTemplate, {
+                    idBlock,
+                    key,
+                    type: item.type,
+                })}`
+                : lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html ``;
+        })}
+        ${this._radioGroupTemplate(radioGroupItems, idBlock)} `;
+    }
+    _emitItemClick(_e, idBlock, key) {
+        this.dispatchEvent(new CustomEvent(_config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionEventName.click, {
+            detail: {
+                idBlock,
+                key,
+            },
+            bubbles: false,
+        }));
+    }
+    _emitChangeEvent(e, detail) {
+        const newDetail = { ...e.detail, ...detail };
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_9__.createEvent)(_config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionEventName.change, {
+            detail: newDetail,
+            eventOption: { bubbles: false },
+        }));
+    }
+    _emitInputEvent(e, detail) {
+        const newDetail = { ...e.detail, ...detail };
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_9__.createEvent)(_config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionEventName.input, {
+            detail: newDetail,
+            eventOption: { bubbles: false },
+        }));
+    }
+    _radioGroupTemplate(radioGroupItems, groupName) {
+        return radioGroupItems.length > 0
+            ? lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+                    <div class="radio-group">
+                        ${radioGroupItems.map((radioItem) => {
+                return lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+                                <div
+                                        @change=${(e) => this._emitChangeEvent(e, {
+                    idBlock: groupName,
+                    key: radioItem.key,
+                })}
+                                >
+                                    ${this._itemTemplate((0,_utils_components_radiobutton_render__WEBPACK_IMPORTED_MODULE_7__.radioHtmlTemplate)({
+                    name: groupName,
+                    value: radioItem.item.value.toString(),
+                    text: radioItem.item.label,
+                }), { idBlock: groupName, key: radioItem.key })}
+                                </div>
+                            `;
+            })}
+                    </div>
+            `
+            : lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html ``;
+    }
+    _itemTemplate(content, { idBlock, key, type }) {
+        const handleClick = (e) => type !== _config_constants__WEBPACK_IMPORTED_MODULE_10__.ActionItemType.MENU &&
+            this._emitItemClick(e, idBlock, key);
+        const handleChange = (event) => {
+            const e = event;
+            this._emitChangeEvent(e, { ...e.detail, idBlock, key });
+        };
+        const handleInput = (event) => {
+            const e = event;
+            this._emitInputEvent(e, { ...e.detail, idBlock, key });
+        };
+        const changeEventNames = [
+            'change',
+            `${_base_input_config_constants__WEBPACK_IMPORTED_MODULE_5__.InputEventName.changeEventName}`,
+        ];
+        const initializeEvents = (el) => {
+            changeEventNames.forEach((eventName) => el?.addEventListener(eventName, handleChange));
+            el?.addEventListener('input-value', lodash_debounce__WEBPACK_IMPORTED_MODULE_4___default()(handleInput, 500));
+        };
+        return lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+            <div
+                    class="action-item body-3"
+                    ${(0,lit_directives_ref_js__WEBPACK_IMPORTED_MODULE_2__.ref)(initializeEvents)}
+                    @click=${handleClick}
+            >
+                ${content}
+            </div>`;
+    }
+    _menuTemplate(key, item) {
+        const mouseover = () => {
+        };
+        const mouseleave = () => {
+        };
+        const click = () => {
+        };
+        return lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+            <div
+                    class="menu-container"
+                    @click=${click}
+                    @mouseover=${mouseover}
+                    @mouseleave=${mouseleave}
+            >
+                <div class="menu-item">
+                    <div>${item.value}</div>
+                    <div class="menu-item__icon">${_config_constants__WEBPACK_IMPORTED_MODULE_10__.ARROW_RIGHT_TEMPLATE}</div>
+                </div>
+
+                <div class="sub-menu">
+                    <slot name=${key} class="sub-menu__content"></slot>
+                </div>
+            </div>
+        `;
+    }
+    _buttonTemplate(item) {
+        return lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+            <div>${item.value}</div> `;
+    }
+    _inputTemplate() {
+        return lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+            <div class="input-container">
+                <tsc-input ?outline=${true} .size=${_base_input_config_types__WEBPACK_IMPORTED_MODULE_6__.Size.XS}></tsc-input>
+            </div>
+        `;
+    }
+    _checkboxTemplate(item) {
+        return lit_static_html_js__WEBPACK_IMPORTED_MODULE_3__.html `
+            <tsc-checkbox value=${item.value} text=${item.label}></tsc-checkbox>
+        `;
+    }
+};
+Action.styles = _style__WEBPACK_IMPORTED_MODULE_11__.stylesAction;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String, attribute: 'menu-open-options' })
+], Action.prototype, "menuOpenOptions", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Array })
+], Action.prototype, "options", void 0);
+Action = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_8__.customElementRegistry)(_config_constants__WEBPACK_IMPORTED_MODULE_10__.ACTION_TAG_NAME)
+], Action);
+
+
+
+/***/ }),
+
+/***/ "./src/components/action/config/constants.ts":
+/*!***************************************************!*\
+  !*** ./src/components/action/config/constants.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ACTION_TAG_NAME": () => (/* binding */ ACTION_TAG_NAME),
+/* harmony export */   "ARROW_RIGHT_TEMPLATE": () => (/* binding */ ARROW_RIGHT_TEMPLATE),
+/* harmony export */   "ActionEventName": () => (/* binding */ ActionEventName),
+/* harmony export */   "ActionItemType": () => (/* binding */ ActionItemType),
+/* harmony export */   "OpenOptions": () => (/* binding */ OpenOptions)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../shared/types */ "./src/shared/types.ts");
+
+
+const ACTION_TAG_NAME = _shared_types__WEBPACK_IMPORTED_MODULE_1__.Selector.Action;
+var OpenOptions;
+(function (OpenOptions) {
+    OpenOptions["LEFT"] = "left";
+    OpenOptions["RIGHT"] = "right";
+})(OpenOptions || (OpenOptions = {}));
+var ActionItemType;
+(function (ActionItemType) {
+    ActionItemType["RADIO_BUTTON"] = "RadioButton";
+    ActionItemType["CHECKBOX"] = "Checkbox";
+    ActionItemType["BUTTON"] = "Button";
+    ActionItemType["INPUT"] = "Input";
+    ActionItemType["MENU"] = "Menu";
+    ActionItemType["CALENDAR"] = "Calendar";
+})(ActionItemType || (ActionItemType = {}));
+const ARROW_RIGHT_TEMPLATE = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.8335 17.5L13.3335 10L5.8335 2.5" stroke="#C0C8D0" stroke-width="1.66667"/>
+    </svg>
+`;
+var ActionEventName;
+(function (ActionEventName) {
+    ActionEventName["click"] = "clickItem";
+    ActionEventName["change"] = "onChange";
+    ActionEventName["input"] = "onInput";
+})(ActionEventName || (ActionEventName = {}));
+
+
+/***/ }),
+
+/***/ "./src/components/action/style.ts":
+/*!****************************************!*\
+  !*** ./src/components/action/style.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "stylesAction": () => (/* binding */ stylesAction)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _radiobutton_radiobutton_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../radiobutton/radiobutton-style */ "./src/components/radiobutton/radiobutton-style.ts");
+/* harmony import */ var _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/css/css-utils */ "./src/components/utils/css/css-utils.ts");
+
+
+
+const stylesAction = [
+    _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_2__.baseCSS,
+    _radiobutton_radiobutton_style__WEBPACK_IMPORTED_MODULE_1__.radioButtonStyle,
+    lit__WEBPACK_IMPORTED_MODULE_0__.css ` 
+    .action-container {
+        display: flex;
+        flex-direction: column;
+        padding: var(--space-16) 0;
+        gap: var(--space-16);
+        width: calc(var(--base-size) * 62)
+    }
+
+    .action-block {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .action-header {
+        margin: 0;
+        letter-spacing: calc(var(--base-size) * 0.25);
+        text-transform: uppercase;
+        color: var(--grey-100);
+        padding-left: var(--space-32);
+    }
+
+    .action-item {
+        width: 100%;
+        height: calc(var(--base-space) * 8);
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: var(--space-24);
+        gap: var(--space-8);
+
+        position: relative;
+
+        color: var(--grey-200);
+        cursor: pointer;
+    }
+
+    .action-item:hover {
+        background: var(--grey-10)
+    }
+
+    .action-item .container,
+    .menu-container {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+    }
+
+    .action-item .container label {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        padding-left: var(--space-24);
+        cursor: pointer;
+    }
+
+    .action-separator {
+        background-color: var(--grey-20);
+        height: calc(var(--base-size) * 0.25);
+        width: 100%;
+    }
+
+    .menu-item {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0 var(--space-16) 0 var(--space-24);
+    }
+
+    .menu-item__icon {
+        display: flex;
+    }
+
+    .menu-container:hover .sub-menu,  .sub-menu[fixed]{
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .sub-menu {
+        display: none;
+        z-index: 1000;
+    }
+
+    .sub-menu__content {
+        position: relative;
+    }
+
+    .input-container {
+        width: 100%;
+        margin-right: var(--space-24);
+    }
+
+    .action-input {
+        width: 100%
+    }
+    `
+];
+
+
+/***/ }),
+
 /***/ "./src/components/base/checkbox/checkbox-base.ts":
 /*!*******************************************************!*\
   !*** ./src/components/base/checkbox/checkbox-base.ts ***!
@@ -5338,6 +5766,107 @@ const IconStyleType = {
     ...BaseStyleType,
     ROUND: 'Round'
 };
+
+
+/***/ }),
+
+/***/ "./src/components/button/icon-button.ts":
+/*!**********************************************!*\
+  !*** ./src/components/button/icon-button.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "IconButton": () => (/* binding */ IconButton)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _basic_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./basic-button */ "./src/components/button/basic-button.ts");
+/* harmony import */ var _config_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./config/constants */ "./src/components/button/config/constants.ts");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style */ "./src/components/button/style.ts");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+let IconButton = class IconButton extends _basic_button__WEBPACK_IMPORTED_MODULE_3__.BasicButton {
+    constructor() {
+        super(...arguments);
+        this.classSettings = {
+            XS: {
+                squareIconSize: 'calc(var(--base-space) * 5)',
+                height: 'calc(var(--base-size) * 8)',
+                padding: 'var(--space-8)'
+            },
+            S: {
+                squareIconSize: 'calc(var(--base-space) * 6)',
+                height: 'calc(var(--base-size) * 10)',
+                padding: 'var(--space-12)'
+            },
+            M: {
+                squareIconSize: 'calc(var(--base-space) * 6)',
+                height: 'calc(var(--base-size) * 12)',
+                padding: 'var(--space-16)'
+            },
+            L: {
+                squareIconSize: 'calc(var(--base-space) * 6)',
+                height: 'calc(var(--base-size) * 14)',
+                padding: 'var(--space-20)'
+            }
+        };
+        this.iconUrl = '';
+        this.iconAlt = '';
+    }
+    render() {
+        if (this.styleType === _config_constants__WEBPACK_IMPORTED_MODULE_4__.IconStyleType.ROUND) {
+            this.size = _config_constants__WEBPACK_IMPORTED_MODULE_4__.Size.XS;
+            this.classSettings[this.size] = {
+                squareIconSize: 'calc(var(--base-space) * 4.5)',
+                height: 'calc(var(--base-size) * 6)',
+                padding: 'calc(var(--space-4)*3/4)'
+            };
+        }
+        this.addStyleProperties(this._initializeCssVariable());
+        return this.basicRender(this._getTemplate());
+    }
+    _initializeCssVariable() {
+        return {
+            '--icon-size': this.classSettings[this.size].squareIconSize
+        };
+    }
+    _getTemplate() {
+        return this.styleType === _config_constants__WEBPACK_IMPORTED_MODULE_4__.IconStyleType.ROUND
+            ? _config_constants__WEBPACK_IMPORTED_MODULE_4__.CHECKMARK_TEMPLATE
+            : lit__WEBPACK_IMPORTED_MODULE_0__.html `
+                    <slot name="image" @click=${this.focus}>
+                        <img class="button__icon" src=${this.iconUrl} alt=${this.iconAlt}>
+                    </slot>
+            `;
+    }
+};
+IconButton.styles = _style__WEBPACK_IMPORTED_MODULE_5__.stylesIconButton;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)()
+], IconButton.prototype, "iconUrl", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)()
+], IconButton.prototype, "iconAlt", void 0);
+IconButton = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_2__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_6__.Selector.IconButton)
+], IconButton);
+
 
 
 /***/ }),
@@ -7147,39 +7676,6 @@ const stylesFormInputs = [
 
 /***/ }),
 
-/***/ "./src/components/form/styles.ts":
-/*!***************************************!*\
-  !*** ./src/components/form/styles.ts ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "stylesForm": () => (/* binding */ stylesForm)
-/* harmony export */ });
-/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
-/* harmony import */ var _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/css/css-utils */ "./src/components/utils/css/css-utils.ts");
-
-
-const stylesForm = [
-    _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__.baseCSS,
-    lit__WEBPACK_IMPORTED_MODULE_0__.css `
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-24);
-        }
-
-        .accordion-content {
-            margin-top: var(--space-16);
-        }
-    `,
-];
-
-
-/***/ }),
-
 /***/ "./src/components/input-calendar/configs/constants.ts":
 /*!************************************************************!*\
   !*** ./src/components/input-calendar/configs/constants.ts ***!
@@ -7441,6 +7937,180 @@ const inputCalendarStyles = [
 
 /***/ }),
 
+/***/ "./src/components/input-number/input-number.ts":
+/*!*****************************************************!*\
+  !*** ./src/components/input-number/input-number.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "InputNumber": () => (/* binding */ InputNumber)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+/* harmony import */ var _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../base/input/config/types */ "./src/components/base/input/config/types.ts");
+/* harmony import */ var _base_input_input_base__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../base/input/input-base */ "./src/components/base/input/input-base.ts");
+/* harmony import */ var _utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/directives/isVisible */ "./src/components/utils/directives/isVisible.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _utils_other_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/other/icons */ "./src/components/utils/other/icons.ts");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./style */ "./src/components/input-number/style.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+let InputNumber = class InputNumber extends _base_input_input_base__WEBPACK_IMPORTED_MODULE_5__.InputBase {
+    constructor() {
+        super(...arguments);
+        this.step = '1';
+        this.min = '1';
+        this.max = '1';
+    }
+    get clearButton() {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="clear-button"
+                 @click=${this.clearInputValue}>
+                ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_8__.clearIcon}
+            </div>
+        `;
+    }
+    get inputTemplate() {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+        <input @focus="${this.focusInput}"
+                @blur="${this.blurInput}"
+                .name=${this.name}
+                @input=${this.editInput}
+                @change=${this.changeValue}
+                ?disabled=${this.disabled}
+                type="number"
+                .step=${this.step}
+                .min=${this.min}
+                .max=${this.max}
+                id="input"
+                class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+            [this.classSettings[this.size].inputText]: true,
+            outline: this.outline,
+            success: this.success,
+            error: this.error,
+            'empty': !this.input?.value
+        })}
+                .placeholder=${this.placeHolderVisible ? '' : this.placeholder}
+                .value=${this.value}
+        />
+        `;
+    }
+    editInput() {
+        const inputValue = this.input?.value || '';
+        if (this.input && ((Number(inputValue) > Number(this.max)) || (Number(inputValue) < Number(this.min))) && inputValue !== '') {
+            this.input.value = this.value;
+            return;
+        }
+        super.editInput();
+    }
+    render() {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+            'input-container': true,
+            [this.classSettings[this.size].className]: true,
+            'disabled': this.disabled
+        })}>
+                <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+            'input-wrapper': true,
+            disabled: this.disabled
+        })}">
+                ${this.placeHolderVisible && (this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.M || this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L) ? lit__WEBPACK_IMPORTED_MODULE_0__.html `
+                <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+            [this.classSettings[this.size].placeholder]: true,
+            'input-placeholder': true
+        })}">${this.placeholder}
+                </div>` : ''}
+                ${this.inputTemplate}
+                ${(0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_6__.isVisible)(this.clearButtonExist && this.clearButtonVisible, this.clearButton)}
+                </div>
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+            'subtitle-2': this.size !== _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L,
+            'body-3': this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L,
+            'additional-text': true,
+            success: this.success,
+            error: this.error
+        })}>
+                    ${this.additionalText}
+                </div>
+            </div>
+        `;
+    }
+};
+InputNumber.styles = _style__WEBPACK_IMPORTED_MODULE_9__.inputNumberStyles;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], InputNumber.prototype, "step", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], InputNumber.prototype, "min", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], InputNumber.prototype, "max", void 0);
+InputNumber = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_7__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_3__.Selector.InputNumber)
+], InputNumber);
+
+
+
+/***/ }),
+
+/***/ "./src/components/input-number/style.ts":
+/*!**********************************************!*\
+  !*** ./src/components/input-number/style.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "inputNumberStyles": () => (/* binding */ inputNumberStyles)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _base_input_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../base/input/style */ "./src/components/base/input/style.ts");
+
+
+const inputNumberStyles = [
+    _base_input_style__WEBPACK_IMPORTED_MODULE_1__.stylesBase,
+    lit__WEBPACK_IMPORTED_MODULE_0__.css `
+        .xs-input #input {
+            padding: var(--space-6) var(--space-6);
+            text-align: center;
+        }
+
+        #input::-webkit-outer-spin-button,
+        #input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #input[type=number] {
+            -moz-appearance: textfield;
+        }
+    `
+];
+
+
+/***/ }),
+
 /***/ "./src/components/input/input.ts":
 /*!***************************************!*\
   !*** ./src/components/input/input.ts ***!
@@ -7541,6 +8211,1282 @@ Input = __decorate([
     (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_6__.customElementRegistry)(tagName)
 ], Input);
 
+
+
+/***/ }),
+
+/***/ "./src/components/message/config/constants.ts":
+/*!****************************************************!*\
+  !*** ./src/components/message/config/constants.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "itemsChangeEventName": () => (/* binding */ itemsChangeEventName)
+/* harmony export */ });
+const itemsChangeEventName = 'items-change';
+
+
+/***/ }),
+
+/***/ "./src/components/message/message.ts":
+/*!*******************************************!*\
+  !*** ./src/components/message/message.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Message": () => (/* binding */ Message)
+/* harmony export */ });
+/* harmony import */ var _utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../utils/directives/isVisible */ "./src/components/utils/directives/isVisible.ts");
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+/* harmony import */ var _lit_reactive_element_decorators_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lit/reactive-element/decorators.js */ "./node_modules/@lit/reactive-element/development/decorators.js");
+/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./style */ "./src/components/message/style.ts");
+/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
+/* harmony import */ var _config_constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./config/constants */ "./src/components/message/config/constants.ts");
+/* harmony import */ var _utils_other_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/other/icons */ "./src/components/utils/other/icons.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+let Message = class Message extends lit__WEBPACK_IMPORTED_MODULE_1__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.items = [];
+        this.closeButtonVisible = true;
+    }
+    render() {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            ${this.items.map((item, index) => this.createMessageContainerTemplate(item, index))}
+        `;
+    }
+    createMessageContainerTemplate(message, index) {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_5__.classMap)({ 'message-container': true, [message.type]: true })}>
+                <div class="highlighting"></div>
+                <div class="details-conteiner">
+                    <div class="message-text head-5">${message.text}</div>
+                     ${(0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_0__.isVisible)(this.closeButtonVisible, this.getCloseButton(index))}
+                </div>
+            </div>
+        `;
+    }
+    getCloseButton(index) {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <div class="close-button" @click=${() => this.closeButtonClick(index)}>
+                ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_9__.closeIcon}
+            </div>
+        `;
+    }
+    closeButtonClick(msgIndex) {
+        this.items = this.items.filter((_, index) => index !== msgIndex);
+        this.emitChangeEvent();
+    }
+    emitChangeEvent() {
+        const detail = { items: this.items };
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_7__.createEvent)(_config_constants__WEBPACK_IMPORTED_MODULE_8__.itemsChangeEventName, { detail }));
+    }
+};
+Message.styles = _style__WEBPACK_IMPORTED_MODULE_6__.messageStyles;
+__decorate([
+    (0,_lit_reactive_element_decorators_js__WEBPACK_IMPORTED_MODULE_4__.property)({ type: Array })
+], Message.prototype, "items", void 0);
+__decorate([
+    (0,_lit_reactive_element_decorators_js__WEBPACK_IMPORTED_MODULE_4__.property)({ type: Boolean })
+], Message.prototype, "closeButtonVisible", void 0);
+Message = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_2__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_3__.Selector.Message)
+], Message);
+
+
+
+/***/ }),
+
+/***/ "./src/components/message/style.ts":
+/*!*****************************************!*\
+  !*** ./src/components/message/style.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "messageStyles": () => (/* binding */ messageStyles)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/css/css-utils */ "./src/components/utils/css/css-utils.ts");
+
+
+const messageStyles = [
+    _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__.baseCSS,
+    lit__WEBPACK_IMPORTED_MODULE_0__.css `
+        .message-container {
+            display: flex;
+            align-items: stretch;
+            padding: var(--space-4);
+            width: calc(var(--space-152) * 4);
+            border-width: var(--space-1);
+            border-radius: calc(var(--border-radius-4) / 2);
+        }
+
+        .message-container:not(:last-child) {
+            margin-bottom: var(--space-20);
+        }
+
+        .highlighting {
+            border-style: solid;
+            width: var(--space-4);
+            border-radius: var(--border-radius-4);
+        }
+
+        .details-conteiner {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-8);
+        }
+
+        .close-button {
+            cursor: pointer;
+        }
+
+        .success {
+            background-color: var(--green-20);
+            color: var(--green-140);
+        }
+
+        .success svg {
+            stroke: var(--green-140);
+        }
+
+        .warning {
+            background-color: var(--yellow-20);
+            color: var(--yellow-180);
+        }
+
+        .warning svg {
+            stroke: var(--yellow-180);
+        }
+
+        .error {
+            background-color: var(--red-20);
+            color: var(--red-140);
+        }
+
+        .error svg {
+            stroke: var(--red-140);
+        }
+    `
+];
+
+
+/***/ }),
+
+/***/ "./src/components/modal-form/config/consts.ts":
+/*!****************************************************!*\
+  !*** ./src/components/modal-form/config/consts.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DEFAULT_FORM_CONFIG": () => (/* binding */ DEFAULT_FORM_CONFIG)
+/* harmony export */ });
+const DEFAULT_FORM_CONFIG = { groups: [] };
+
+
+/***/ }),
+
+/***/ "./src/components/modal-form/modal-form.ts":
+/*!*************************************************!*\
+  !*** ./src/components/modal-form/modal-form.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ModalForm": () => (/* binding */ ModalForm)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modal/modal */ "./src/components/modal/modal.ts");
+/* harmony import */ var _config_consts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./config/consts */ "./src/components/modal-form/config/consts.ts");
+/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
+/* harmony import */ var _form_inputs_configs_constant__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../form-inputs/configs/constant */ "./src/components/form-inputs/configs/constant.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+const tagName = _shared_types__WEBPACK_IMPORTED_MODULE_1__.Selector.ModalForm;
+let ModalForm = class ModalForm extends _modal_modal__WEBPACK_IMPORTED_MODULE_4__.Modal {
+    constructor() {
+        super(...arguments);
+        this.formConfig = _config_consts__WEBPACK_IMPORTED_MODULE_5__.DEFAULT_FORM_CONFIG;
+    }
+    get form() {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <tsc-form
+                .config=${this.formConfig}
+                @form-change=${(event) => { event.stopImmediatePropagation(); this.formChange(event.detail); }}
+            ></tsc-form>
+        `;
+    }
+    willUpdate(changedProperties) {
+        if (this.config && changedProperties.has('open') && this.formConfig && this.open) {
+            this.config.body = this.form;
+        }
+    }
+    formChange(detail) {
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_6__.createEvent)(_form_inputs_configs_constant__WEBPACK_IMPORTED_MODULE_7__.formChangeEventName, { detail }));
+    }
+};
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_3__.property)()
+], ModalForm.prototype, "formConfig", void 0);
+ModalForm = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_2__.customElementRegistry)(tagName)
+], ModalForm);
+
+
+
+/***/ }),
+
+/***/ "./src/components/modal/modal.ts":
+/*!***************************************!*\
+  !*** ./src/components/modal/modal.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Modal": () => (/* binding */ Modal)
+/* harmony export */ });
+/* harmony import */ var _utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../utils/directives/isVisible */ "./src/components/utils/directives/isVisible.ts");
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style */ "./src/components/modal/style.ts");
+/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
+/* harmony import */ var _utils_other_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/other/icons */ "./src/components/utils/other/icons.ts");
+/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+const tagName = _shared_types__WEBPACK_IMPORTED_MODULE_3__.Selector.Modal;
+let Modal = class Modal extends lit__WEBPACK_IMPORTED_MODULE_1__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.open = false;
+    }
+    get closeButton() {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <div class="close-button"
+                @click=${this.close}>
+                ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_7__.closeIcon}
+            </div>
+        `;
+    }
+    get modalHeader() {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <div class="modal-header">
+                <div class="head-3">${this.config?.header.text}</div>
+                ${this.closeButton}
+            </div>
+        `;
+    }
+    get modalFooter() {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            ${this.config?.footer.buttons.map(button => lit__WEBPACK_IMPORTED_MODULE_1__.html `
+                <tsc-button .id=${button.id} class="footer-button"
+                    .disabled=${button.disabled}
+                    @click=${() => this.handleClick(button.id)}
+                    text=${button.label}
+                    .styleType=${button.style}
+                    .size=${button.size}>
+                </tsc-button>
+            `)}
+        `;
+    }
+    render() {
+        if (!this.config) {
+            return lit__WEBPACK_IMPORTED_MODULE_1__.html ``;
+        }
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_6__.classMap)({ 'overlay': true, open: this.open })}" @click="${this.close}"></div>
+            <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_6__.classMap)({ 'modal-container': true, open: this.open })}">
+                ${(0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_0__.isVisible)(this.config.header.show, this.modalHeader)}
+                <div class="modal-body">
+                    ${this.config.body}
+                </div>
+                <div class="modal-footer">
+                    ${this.modalFooter}
+                </div>
+            </div>
+        `;
+    }
+    close() {
+        this.open = false;
+    }
+    handleClick(buttonId) {
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_8__.createEvent)(`${buttonId}-button-click`));
+    }
+};
+Modal.styles = _style__WEBPACK_IMPORTED_MODULE_5__.modalStyles;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)()
+], Modal.prototype, "config", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)({ type: Boolean })
+], Modal.prototype, "open", void 0);
+Modal = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_4__.customElementRegistry)(tagName)
+], Modal);
+
+
+
+/***/ }),
+
+/***/ "./src/components/modal/style.ts":
+/*!***************************************!*\
+  !*** ./src/components/modal/style.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "modalStyles": () => (/* binding */ modalStyles)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/css/css-utils */ "./src/components/utils/css/css-utils.ts");
+
+
+const modalStyles = [
+    _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__.baseCSS,
+    lit__WEBPACK_IMPORTED_MODULE_0__.css `
+        :host {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .overlay:not(.open),
+        .modal-container:not(.open) {
+            display: none;
+        }
+
+        .modal-container.open {
+            z-index: 10000;
+            position: fixed;
+            display: block;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--common-white);
+            border-radius: var(--space-6);
+            min-width: calc(var(--space-40) * 20);
+        }
+
+        .overlay.open {
+            background: var(--grey-200);
+            opacity: 20%;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999;
+        }
+
+        .close-button {
+            cursor: pointer;
+        }
+
+        .close-button svg {
+            stroke: var(--grey-100);
+        }
+
+        .modal-header {
+            background: var(--grey-10);
+            padding: var(--space-24) var(--space-24) var(--space-20);
+            border-radius: var(--space-6) var(--space-6) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: var(--space-20) var(--space-24) var(--space-24);
+        }
+
+        .modal-footer {
+            padding-bottom: var(--space-24);
+            padding: 0 var(--space-24) var(--space-24);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .footer-button {
+            margin-left: var(--space-12);
+        }
+    `
+];
+
+
+/***/ }),
+
+/***/ "./src/components/paginator/config/constants.ts":
+/*!******************************************************!*\
+  !*** ./src/components/paginator/config/constants.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ROWS_PER_PAGE_OPTIONS": () => (/* binding */ ROWS_PER_PAGE_OPTIONS),
+/* harmony export */   "pageChangeEventName": () => (/* binding */ pageChangeEventName)
+/* harmony export */ });
+const ROWS_PER_PAGE_OPTIONS = [
+    { value: 5, label: '5' },
+    { value: 10, label: '10' },
+    { value: 20, label: '20' },
+    { value: 30, label: '30' }
+];
+const pageChangeEventName = 'page-change';
+
+
+/***/ }),
+
+/***/ "./src/components/paginator/paginator.ts":
+/*!***********************************************!*\
+  !*** ./src/components/paginator/paginator.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Paginator": () => (/* binding */ Paginator)
+/* harmony export */ });
+/* harmony import */ var _utils_other_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../utils/other/icons */ "./src/components/utils/other/icons.ts");
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+/* harmony import */ var _button_config_constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../button/config/constants */ "./src/components/button/config/constants.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
+/* harmony import */ var _config_constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./config/constants */ "./src/components/paginator/config/constants.ts");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./style */ "./src/components/paginator/style.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+let Paginator = class Paginator extends lit__WEBPACK_IMPORTED_MODULE_1__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.totalRecords = 0;
+        this.rows = 5;
+        this.first = 0;
+        this.rowsPerPageOptions = _config_constants__WEBPACK_IMPORTED_MODULE_8__.ROWS_PER_PAGE_OPTIONS;
+        this._currentPage = 1;
+        this._pageCount = 0;
+    }
+    get pageInputTemplate() {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <tsc-input-number
+                class="selected-page-input"
+                .value=${this._currentPage.toString()}
+                .size=${_button_config_constants__WEBPACK_IMPORTED_MODULE_5__.Size.XS}
+                .clearButtonExist=${false}
+                .min=${'1'}
+                .max=${this._pageCount.toString()}
+                ?outline=${true}
+                @input-change=${(event) => this.changePage(event.detail.value)}
+                >
+            </tsc-input-number>
+        `;
+    }
+    get rowsDropdownTemplate() {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <tsc-dropdown
+                id="dropdown"
+                .items=${this.rowsPerPageOptions}
+                .initValue=${this.rows}
+                .size=${_button_config_constants__WEBPACK_IMPORTED_MODULE_5__.Size.XXS}
+                .readonlyInput=${true}
+                ?outline=${true}
+                @input-change=${(rowsCount) => this.rowsCountChange(rowsCount)}>
+            </tsc-dropdown>
+        `;
+    }
+    willUpdate(changedProperties) {
+        if (changedProperties.has('totalRecords') || changedProperties.has('rows')) {
+            this.updatePaginatorState();
+        }
+    }
+    render() {
+        return lit__WEBPACK_IMPORTED_MODULE_1__.html `
+            <div class="paginator-container">
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({ disabled: this._currentPage === 1, 'nav-button': true })} @click=${() => this.changePage(1)}>
+                    ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_0__.leftDoubleArrowIcon}
+                </div>
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({ disabled: this._currentPage === 1, 'nav-button': true })} @click=${() => this.changePage(this._currentPage - 1)}>
+                    ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_0__.leftArrowIcon}
+                </div>
+                <div class="pages-container">
+                    ${this.pageInputTemplate}
+                    <!-- TODO: localization -->
+                    <span class="selected-page-of">из</span>
+                    <span class="body-3">${this._pageCount}</span>
+                </div>
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({ disabled: this._currentPage === this._pageCount, 'nav-button': true })} @click=${() => this.changePage(this._currentPage + 1)}>
+                    ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_0__.rightArrowIcon}
+                </div>
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({ disabled: this._currentPage === this._pageCount, 'nav-button': true })} @click=${() => this.changePage(this._pageCount)}>
+                    ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_0__.rightDoubleArrowIcon}
+                </div>
+                ${this.rowsDropdownTemplate}
+            </div>
+        `;
+    }
+    getPageCount() {
+        return Math.ceil(this.totalRecords / this.rows);
+    }
+    getCurrentPage() {
+        return Math.ceil(this.first / this.rows) || 1;
+    }
+    getFirstRow() {
+        return (this._currentPage - 1) * this.rows;
+    }
+    rowsCountChange(rows) {
+        this.rows = Number(rows.detail.value);
+        this.updatePaginatorState();
+        this.emitChangePage();
+    }
+    updatePaginatorState() {
+        this._pageCount = this.getPageCount();
+        this._currentPage = this.getCurrentPage();
+        this.first = this.getFirstRow();
+    }
+    changePage(page) {
+        this._currentPage = page;
+        this.first = this.getFirstRow();
+        this.emitChangePage();
+    }
+    emitChangePage() {
+        const detail = { page: this._currentPage, rows: this.rows, first: this.first };
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_7__.createEvent)(_config_constants__WEBPACK_IMPORTED_MODULE_8__.pageChangeEventName, { detail }));
+    }
+};
+Paginator.styles = _style__WEBPACK_IMPORTED_MODULE_9__.paginatorStyles;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)({ type: Number, attribute: 'total-records' })
+], Paginator.prototype, "totalRecords", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)({ type: Number })
+], Paginator.prototype, "rows", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)({ type: Number })
+], Paginator.prototype, "first", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.property)({ type: Array })
+], Paginator.prototype, "rowsPerPageOptions", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.state)()
+], Paginator.prototype, "_currentPage", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_2__.state)()
+], Paginator.prototype, "_pageCount", void 0);
+Paginator = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_6__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_4__.Selector.Paginator)
+], Paginator);
+
+
+
+/***/ }),
+
+/***/ "./src/components/paginator/style.ts":
+/*!*******************************************!*\
+  !*** ./src/components/paginator/style.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "paginatorStyles": () => (/* binding */ paginatorStyles)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/css/css-utils */ "./src/components/utils/css/css-utils.ts");
+
+
+const paginatorStyles = [
+    _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__.baseCSS,
+    lit__WEBPACK_IMPORTED_MODULE_0__.css `
+        .paginator-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-button {
+            cursor: pointer;
+            width: var(--space-32);
+            height: var(--space-32);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-button:hover {
+            background-color: var(--grey-10);
+        }
+
+        .pages-container {
+            display: flex;
+            align-items: baseline;
+            margin: var(--space-14);
+        }
+
+        .page-count-bar span {
+            color: var(--grey-80);
+        }
+
+        .selected-page-input {
+            width: var(--space-40);
+            height: var(--space-32);
+        }
+
+        .selected-page-of {
+            color: var(--grey-80);
+            margin: var(--space-8);
+        }
+
+        .disabled {
+            pointer-events: none;
+        }
+
+        #dropdown {
+            height: var(--space-32);
+            width: calc(var(--space-18) * 3);
+            margin-left: var(--space-14);
+        }
+    `
+];
+
+
+/***/ }),
+
+/***/ "./src/components/progress-bar/progress-bar.ts":
+/*!*****************************************************!*\
+  !*** ./src/components/progress-bar/progress-bar.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ProgressBar": () => (/* binding */ ProgressBar)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var _utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/directives/isVisible */ "./src/components/utils/directives/isVisible.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+let ProgressBar = class ProgressBar extends lit__WEBPACK_IMPORTED_MODULE_0__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.isDisplay = true;
+    }
+    connectedCallback() {
+        super.connectedCallback();
+    }
+    render() {
+        return (0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_2__.isVisible)(this.isDisplay, lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="container">
+                <div class="progress"></div>
+            </div>
+        `);
+    }
+};
+ProgressBar.styles = lit__WEBPACK_IMPORTED_MODULE_0__.css `
+      .container {
+        height: var(--base-size);
+        background: var(--blue-40);
+        width: 100%;
+        position: relative;
+      }
+
+      .progress {
+        position: absolute;
+        left: 0;
+        background: var(--blue-120);
+        height: var(--base-size);
+        animation-name: move;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+
+      @keyframes move {
+        from {
+          width: 0%;
+        }
+
+        to {
+          width: 100%;
+        }
+      }
+    `;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.query)('.container')
+], ProgressBar.prototype, "container", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean })
+], ProgressBar.prototype, "isDisplay", void 0);
+ProgressBar = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_4__.Selector.ProgressBar)
+], ProgressBar);
+
+
+
+/***/ }),
+
+/***/ "./src/components/radio-group/radioGroup.ts":
+/*!**************************************************!*\
+  !*** ./src/components/radio-group/radioGroup.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RadioGroup": () => (/* binding */ RadioGroup)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var _radiobutton_radiobutton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../radiobutton/radiobutton */ "./src/components/radiobutton/radiobutton.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _utils_components_radiobutton_render__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/components/radiobutton-render */ "./src/components/utils/components/radiobutton-render.ts");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+const gridColumnVar = '--grid-template-columns';
+const gridRowVar = '--grid-template-rows';
+let RadioGroup = class RadioGroup extends lit__WEBPACK_IMPORTED_MODULE_0__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.items = [
+            { label: 'var 1', value: '1' },
+            { label: 'var 2', value: '2' }
+        ];
+        this.name = '';
+    }
+    set gridColumns(v) {
+        setTimeout(() => {
+            this.radioGroup.style.setProperty(gridColumnVar, v);
+        }, 0);
+    }
+    set gridRows(v) {
+        setTimeout(() => {
+            this.radioGroup.style.setProperty(gridRowVar, v);
+        }, 0);
+    }
+    render() {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="radio-group"
+                 @change=${(e) => console.log('get event in radio group', e, e.detail)}>
+                ${this.items.map(item => (0,_utils_components_radiobutton_render__WEBPACK_IMPORTED_MODULE_4__.radioHtmlTemplate)({
+            name: this.name,
+            value: item.value,
+            text: item.label,
+            error: item.error
+        }))}
+            </div>
+        `;
+    }
+};
+RadioGroup.styles = [
+    _radiobutton_radiobutton__WEBPACK_IMPORTED_MODULE_2__.RadioButton.styles,
+    lit__WEBPACK_IMPORTED_MODULE_0__.css `
+          .radio-group {
+            ${(0,lit__WEBPACK_IMPORTED_MODULE_0__.unsafeCSS)(gridColumnVar)}: auto;
+            ${(0,lit__WEBPACK_IMPORTED_MODULE_0__.unsafeCSS)(gridRowVar)}: auto;
+            display: grid;
+            grid-template-columns: var(--grid-template-columns);
+            grid-template-rows: var(--grid-template-rows);
+          }
+        `
+];
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Array })
+], RadioGroup.prototype, "items", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], RadioGroup.prototype, "name", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String, attribute: 'grid-columns' })
+], RadioGroup.prototype, "gridColumns", null);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String, attribute: 'grid-rows' })
+], RadioGroup.prototype, "gridRows", null);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.query)('.radio-group')
+], RadioGroup.prototype, "radioGroup", void 0);
+RadioGroup = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_5__.Selector.RadioGroup)
+], RadioGroup);
+
+
+
+/***/ }),
+
+/***/ "./src/components/radiobutton/radiobutton-style.ts":
+/*!*********************************************************!*\
+  !*** ./src/components/radiobutton/radiobutton-style.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "radioButtonStyle": () => (/* binding */ radioButtonStyle)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/css/css-utils */ "./src/components/utils/css/css-utils.ts");
+
+
+const radioButtonStyle = [
+    _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_1__.baseCSS,
+    lit__WEBPACK_IMPORTED_MODULE_0__.css `
+      .container {
+        position: relative;
+        --label-color: var(--grey-200);
+      }
+
+      input {
+        display: flex;
+        position: relative;
+        width: calc(var(--base-size) * 4);
+        height: calc(var(--base-size) * 4);
+        margin: var(--base-size);
+        cursor: pointer;
+        appearance: none;
+        border-radius: 50%;
+        --before-background: var(--blue-120);
+        --after-background: transparent;
+        --before-border-color: var(--grey-80);
+        --after-border-color: white;
+      }
+
+      input::before {
+        content: '';
+        width: calc(var(--base-size) * 4);
+        height: calc(var(--base-size) * 4);
+        background-color: var(--before-background);
+        border-radius: calc(var(--base-size) * 25);
+        position: absolute;
+        left: 0;
+        box-sizing: border-box;
+      }
+
+      input::after {
+        content: '';
+        background-color: var(--after-background);
+        position: absolute;
+        left: calc(var(--base-size) / 2);
+        top: calc(var(--base-size) / 2);
+        width: calc(var(--base-size) * 2);
+        height: calc(var(--base-size) * 2);
+        border: calc(var(--base-size) / 2) solid var(--after-border-color);
+        border-radius: 50%;
+      }
+
+      input::after,
+      input::before {
+        transition-duration: .25s;
+        transition-property: background-color, border-color, box-shadow;
+        transition-timing-function: ease;
+      }
+
+      input:not(:checked)::after {
+        display: none;
+      }
+
+      input:not(:checked)::before {
+        background-color: var(--before-background);
+        border: calc(var(--base-size) / 2) solid var(--before-border-color);
+      }
+
+      label {
+        display: flex;
+        grid-gap: calc(var(--base-size) * 3);
+        color: var(--label-color);
+        align-items: center;
+        cursor: pointer;
+      }
+
+      input:checked {
+        --box-shadow-color: var(--blue-50);
+        --before-background: var(--blue-120);
+        --after-background: transparent;
+      }
+
+      input:not(:checked) {
+        --box-shadow-color: var(--grey-50);
+        --before-background: white;
+        --after-background: transparent;
+        --before-border-color: var(--grey-80);
+        --after-border-color: white;
+      }
+
+      input:not(:checked):hover {
+        --before-border-color: var(--grey-60);
+      }
+
+      input:checked:hover {
+        --before-background: var(--blue-100);
+      }
+
+      input:focus::before {
+        box-shadow: 0 0 0 calc(var(--base-size) / 2) var(--box-shadow-color);
+      }
+
+      input[type="radio" i]:focus-visible {
+        box-shadow: 0 0 0 calc(var(--base-size) / 2) var(--box-shadow-color);
+        outline: none;
+        outline-offset: 0;
+      }
+
+      input.error {
+        --box-shadow-color: var(--red-50);
+        --before-border-color: var(--red-120);
+        --after-background: var(--grey-80);
+      }
+
+      input.error:checked {
+        --before-background: var(--red-120);
+      }
+
+      .disabled {
+        --before-background: var(--grey-50) !important;
+        --before-border-color: var(--grey-50) !important;
+        --after-background: var(--grey-50) !important;
+        --label-color: var(--grey-80) !important;
+        pointer-events: none;
+      }
+    `
+];
+
+
+/***/ }),
+
+/***/ "./src/components/radiobutton/radiobutton.ts":
+/*!***************************************************!*\
+  !*** ./src/components/radiobutton/radiobutton.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RadioButton": () => (/* binding */ RadioButton)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var _utils_components_radiobutton_render__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/components/radiobutton-render */ "./src/components/utils/components/radiobutton-render.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
+/* harmony import */ var _radiobutton_style__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./radiobutton-style */ "./src/components/radiobutton/radiobutton-style.ts");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+let RadioButton = class RadioButton extends lit__WEBPACK_IMPORTED_MODULE_0__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.name = '';
+        this.text = '';
+        this.disabled = false;
+        this.value = '';
+        this.error = '';
+    }
+    emitValue(e) {
+        const el = e.target;
+        console.log('el', el, this);
+        const detail = { value: this.value, checked: el.checked };
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_4__.createEvent)(e.type, { detail }));
+    }
+    render() {
+        return (0,_utils_components_radiobutton_render__WEBPACK_IMPORTED_MODULE_2__.radioHtmlTemplate)({
+            name: this.name,
+            value: this.value,
+            text: this.text,
+            emitValue: this.emitValue.bind(this),
+            disabled: this.disabled,
+            error: this.error
+        });
+    }
+};
+RadioButton.styles = _radiobutton_style__WEBPACK_IMPORTED_MODULE_5__.radioButtonStyle;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], RadioButton.prototype, "name", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], RadioButton.prototype, "text", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean })
+], RadioButton.prototype, "disabled", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], RadioButton.prototype, "value", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], RadioButton.prototype, "error", void 0);
+RadioButton = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_6__.Selector.RadioButton)
+], RadioButton);
+
+
+
+/***/ }),
+
+/***/ "./src/components/spinner/spinner.ts":
+/*!*******************************************!*\
+  !*** ./src/components/spinner/spinner.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Spinner": () => (/* binding */ Spinner)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var _utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/directives/isVisible */ "./src/components/utils/directives/isVisible.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./types */ "./src/components/spinner/types.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils */ "./src/components/spinner/utils.ts");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+let Spinner = class Spinner extends lit__WEBPACK_IMPORTED_MODULE_0__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.size = _types__WEBPACK_IMPORTED_MODULE_4__.SpinnerSize.M;
+        this.isDisplay = true;
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        setTimeout(() => {
+            this.container.style.setProperty('--size', (0,_utils__WEBPACK_IMPORTED_MODULE_5__.getSpinnerSize)(this.size));
+        }, 0);
+    }
+    render() {
+        return (0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_2__.isVisible)(this.isDisplay, lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="container"></div>
+        `);
+    }
+};
+Spinner.styles = lit__WEBPACK_IMPORTED_MODULE_0__.css `
+      .container {
+        --size: calc(var(--base-size) / 2 * 23);
+        background-color: white;
+        border-left: calc(var(--base-size) / 2) solid var(--blue-120);
+        border-radius: 50%;
+        width: var(--size);
+        height: var(--size);
+        animation-name: rotate;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg)
+        }
+
+        to {
+          transform: rotate(1turn)
+        }
+      }
+    `;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], Spinner.prototype, "size", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.query)('.container')
+], Spinner.prototype, "container", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean })
+], Spinner.prototype, "isDisplay", void 0);
+Spinner = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_6__.Selector.Spinner)
+], Spinner);
+
+
+
+/***/ }),
+
+/***/ "./src/components/spinner/types.ts":
+/*!*****************************************!*\
+  !*** ./src/components/spinner/types.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SpinnerSize": () => (/* binding */ SpinnerSize)
+/* harmony export */ });
+var SpinnerSize;
+(function (SpinnerSize) {
+    SpinnerSize["XS"] = "XS";
+    SpinnerSize["S"] = "S";
+    SpinnerSize["M"] = "M";
+    SpinnerSize["L"] = "L";
+})(SpinnerSize || (SpinnerSize = {}));
+
+
+/***/ }),
+
+/***/ "./src/components/spinner/utils.ts":
+/*!*****************************************!*\
+  !*** ./src/components/spinner/utils.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getSpinnerSize": () => (/* binding */ getSpinnerSize)
+/* harmony export */ });
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./src/components/spinner/types.ts");
+
+function getSpinnerSize(size) {
+    switch (size) {
+        case _types__WEBPACK_IMPORTED_MODULE_0__.SpinnerSize.XS:
+            return 'calc(var(--base-size) / 2 * 15)';
+        case _types__WEBPACK_IMPORTED_MODULE_0__.SpinnerSize.S:
+            return 'calc(var(--base-size) / 2 * 19)';
+        case _types__WEBPACK_IMPORTED_MODULE_0__.SpinnerSize.M:
+            return 'calc(var(--base-size) / 2 * 23)';
+        case _types__WEBPACK_IMPORTED_MODULE_0__.SpinnerSize.L:
+            return 'calc(var(--base-size) / 2 * 27)';
+        default:
+            return 'calc(var(--base-size) / 2 * 23)';
+    }
+}
 
 
 /***/ }),
@@ -7668,6 +9614,581 @@ Switch = __decorate([
 
 /***/ }),
 
+/***/ "./src/components/tab-bar/config.ts":
+/*!******************************************!*\
+  !*** ./src/components/tab-bar/config.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TabEventName": () => (/* binding */ TabEventName)
+/* harmony export */ });
+const TabEventName = 'selectedTab';
+
+
+/***/ }),
+
+/***/ "./src/components/tab-bar/tabBar.ts":
+/*!******************************************!*\
+  !*** ./src/components/tab-bar/tabBar.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TabBar": () => (/* binding */ TabBar)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./config */ "./src/components/tab-bar/config.ts");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+let TabBar = class TabBar extends lit__WEBPACK_IMPORTED_MODULE_0__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.disabled = false;
+        this.items = [
+            { name: 'tab 1' },
+            { name: 'tab 2' }
+        ];
+        this.selectedTabName = '';
+    }
+    selectTab(name) {
+        this.selectedTabName = name;
+        const detail = { value: this.selectedTabName };
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_4__.createEvent)(_config__WEBPACK_IMPORTED_MODULE_5__.TabEventName, { detail }));
+    }
+    render() {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="container">
+                ${this.items.map(tab => lit__WEBPACK_IMPORTED_MODULE_0__.html `
+                    <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+            'tab-item': true,
+            active: tab.name === this.selectedTabName,
+            disabled: this.disabled
+        })} @click=${() => this.selectTab(tab.name)}>${tab.name}
+                    </div>`)}
+            </div>
+        `;
+    }
+};
+TabBar.styles = lit__WEBPACK_IMPORTED_MODULE_0__.css `
+      .container {
+        display: flex;
+      }
+
+      .tab-item {
+        color: var(--grey-100);
+        border-bottom: calc(var(--base-size) / 2) solid var(--grey-20);
+        padding-right: var(--space-16);
+        padding-left: var(--space-16);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        transition: border-bottom 1s;
+      }
+
+      .tab-item:hover {
+        color: var(--grey-200);
+        cursor: pointer;
+      }
+
+      .active {
+        color: var(--grey-200);
+        border-bottom: calc(var(--base-size) / 2) solid var(--blue-120);
+      }
+
+      .disabled {
+        color: var(--grey-50);
+        pointer-events: none;
+      }
+    `;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean })
+], TabBar.prototype, "disabled", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Array })
+], TabBar.prototype, "items", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.state)()
+], TabBar.prototype, "selectedTabName", void 0);
+TabBar = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_6__.Selector.TabBar)
+], TabBar);
+
+
+
+/***/ }),
+
+/***/ "./src/components/table/config/consts.ts":
+/*!***********************************************!*\
+  !*** ./src/components/table/config/consts.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addItemButtonClickEventName": () => (/* binding */ addItemButtonClickEventName)
+/* harmony export */ });
+const addItemButtonClickEventName = 'add-item-button-click';
+
+
+/***/ }),
+
+/***/ "./src/components/table/style.ts":
+/*!***************************************!*\
+  !*** ./src/components/table/style.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "stylesBase": () => (/* binding */ stylesBase)
+/* harmony export */ });
+/* harmony import */ var _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/css/css-utils */ "./src/components/utils/css/css-utils.ts");
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+
+
+const stylesBase = [
+    _utils_css_css_utils__WEBPACK_IMPORTED_MODULE_0__.baseCSS,
+    lit__WEBPACK_IMPORTED_MODULE_1__.css `
+      .container {
+        display: grid;
+        --columns-grid-columns: auto;
+        max-height: calc(var(--base-size) * 200);
+        color: var(--grey-200);
+        background: white;
+      }
+
+      .header {
+        display: grid;
+        grid-template-columns: var(--columns-grid-columns);
+        border-bottom: var(--space-1) solid var(--grey-60);
+        overflow: hidden;
+      }
+
+      .content {
+        overflow: auto;
+        max-height: 64vh;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: var(--columns-grid-columns);
+        border-bottom: var(--space-1) solid var(--grey-20);
+        height: var(--space-40);
+        width: fit-content;
+      }
+
+      .column-header {
+        padding: var(--space-12);
+        height: var(--space-40);
+      }
+
+      .row-item {
+        display: flex;
+        align-items: center;
+        padding: 0 var(--space-12);
+      }
+
+      .tag-column-content {
+        font-size: calc(var(--base-font-size) * 7.5);
+        line-height: calc(var(--base-line-height) * 5);
+        font-weight: var(--base-font-weight);
+        padding: var(--space-4) var(--space-8);
+        border-radius: var(--border-radius-4);
+      }
+
+      .link-column-content {
+        color: var(--grey-160);
+      }
+
+      .date-column-content {
+        display: flex;
+        align-items: center;
+        gap: var(--space-8);
+      }
+
+      .priority-column-content {
+
+      }
+
+      .priority-border {
+        width: var(--space-4);
+        height: var(--space-20);
+        display: inline-block;
+        border-radius: var(--border-radius-4);
+        margin-right: var(--space-8);
+      }
+
+      .priority-border.low {
+        background-color: var(--green-120);
+      }
+
+      .priority-border.mid {
+        background-color: var(--yellow-120);
+      }
+
+      .priority-border.high {
+        background-color: var(--red-120);
+      }
+
+      .icon-column-content {
+        margin-left: var(--space-8);
+      }
+
+      .icon-column-image {
+        width: var(--space-24);
+        height: var(--space-24);
+        border-radius: var(--border-radius-4);
+      }
+
+      .action-panel {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+    `
+];
+
+
+/***/ }),
+
+/***/ "./src/components/table/table.ts":
+/*!***************************************!*\
+  !*** ./src/components/table/table.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Table": () => (/* binding */ Table)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var lit_directives_unsafe_html_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/directives/unsafe-html.js */ "./node_modules/lit/directives/unsafe-html.js");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _table_type__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./table.type */ "./src/components/table/table.type.ts");
+/* harmony import */ var _dropdown_dropdown__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../dropdown/dropdown */ "./src/components/dropdown/dropdown.ts");
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./style */ "./src/components/table/style.ts");
+/* harmony import */ var lit_directives_style_map_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lit/directives/style-map.js */ "./node_modules/lit/directives/style-map.js");
+/* harmony import */ var _utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/directives/isVisible */ "./src/components/utils/directives/isVisible.ts");
+/* harmony import */ var _utils_other_icons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/other/icons */ "./src/components/utils/other/icons.ts");
+/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
+/* harmony import */ var _button_config_constants__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../button/config/constants */ "./src/components/button/config/constants.ts");
+/* harmony import */ var _config_consts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./config/consts */ "./src/components/table/config/consts.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const tagName = _shared_types__WEBPACK_IMPORTED_MODULE_6__.Selector.Table;
+const selectionChangeEvent = 'selectionChange';
+const rowClickEvent = 'rowClick';
+const rowChangeEvent = 'rowChange';
+let Table = class Table extends lit__WEBPACK_IMPORTED_MODULE_0__.LitElement {
+    constructor() {
+        super(...arguments);
+        this.columns = [];
+        this.items = [];
+        this.showActionPanel = false;
+        this._scrollLeft = 0;
+        this.defaultTextBackground = 'white';
+        this.defaultTextColor = '#21272C';
+        this.selection = [];
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        setTimeout(() => {
+            console.log('this.container: ', this.container);
+            console.log('this.columns: ', this.columns);
+            console.log('this.items: ', this.items);
+            const gridTemplateColumns = this.columns.map(e => e.width || 'minmax(var(--space-152), 1fr)').join(' ');
+            this.container?.style.setProperty('--columns-grid-columns', gridTemplateColumns);
+        }, 0);
+    }
+    selectAll(event) {
+        if (event.detail.value) {
+            this.selection = [...this.items];
+        }
+        else {
+            this.selection = [];
+        }
+        this._emitSelectionChange();
+    }
+    setSelectedRow(rowId, event) {
+        const selectedRow = this.items.find(row => row.id === rowId);
+        if (!selectedRow) {
+            return;
+        }
+        if (event.detail.value) {
+            this.selection.push(selectedRow);
+        }
+        else {
+            this.selection = this.selection.filter(row => row.id === rowId);
+        }
+        this._emitSelectionChange();
+    }
+    rowChanged(event, row, itemProperty) {
+        const newRow = { ...row };
+        newRow[itemProperty].value = event.detail.value;
+        this._emitRowChanged(event, newRow);
+    }
+    getTextRowHtml(row) {
+        if (row.textBackground || row.textColor) {
+            const styles = {
+                color: row.textColor || this.defaultTextColor,
+                backgroundColor: row.textBackground || this.defaultTextBackground
+            };
+            return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+                <span class="tag-column-content"
+                      style=${(0,lit_directives_style_map_js__WEBPACK_IMPORTED_MODULE_8__.styleMap)(styles)}>${row.value}</span>
+            `;
+        }
+        else {
+            return lit__WEBPACK_IMPORTED_MODULE_0__.html `<span class="text-column-content">${row.value}</span>`;
+        }
+    }
+    getListRowHtml(rowsInfo, column) {
+        const options = column.listOptions && Array.isArray(column.listOptions) ? column.listOptions : [];
+        const row = rowsInfo[column.itemProperty];
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <tsc-dropdown .items=${options}
+                          initValue=${row.value}
+                          @input-change=${(event) => this.rowChanged(event, rowsInfo, column.itemProperty)}
+                          disabled="${row.disabled || lit__WEBPACK_IMPORTED_MODULE_0__.nothing}"
+                          size="XS"
+                          outline="true">
+            </tsc-dropdown>
+        `;
+    }
+    getInputRowHtml(rowsInfo, column) {
+        const row = rowsInfo[column.itemProperty];
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <tsc-input initInputValue=${row.value}
+                       @input-change=${(event) => this.rowChanged(event, rowsInfo, column.itemProperty)}
+                       disabled="${row.disabled || lit__WEBPACK_IMPORTED_MODULE_0__.nothing}"
+                       size="XS"
+                       outline="true">
+            </tsc-input>
+        `;
+    }
+    getLinkRowHtml(row) {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `<a class="link-column-content body-3" href="${row.value}">${row.label}</a>`;
+    }
+    getDateRowHtml(row) {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="date-column-content">
+                ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_10__.calendarIcon}
+                <span>${new Date(row.value).toLocaleDateString()}</span>
+                ${(0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_9__.isVisible)(!!row.isWarning, _utils_other_icons__WEBPACK_IMPORTED_MODULE_10__.warningIcon)}
+            </div>
+        `;
+    }
+    getPriorityRowHtml(row) {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <span class="priority-border ${row.value}"></span>
+            <span class="priority-column-content">${row.label}</span>
+        `;
+    }
+    getSwitchRowHtml(rowsInfo, column) {
+        const row = rowsInfo[column.itemProperty];
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <tsc-switch @change=${(event) => this.rowChanged(event, rowsInfo, column.itemProperty)}
+                        initCheckedState="${row.value || lit__WEBPACK_IMPORTED_MODULE_0__.nothing}"
+                        disabled="${row.disabled || lit__WEBPACK_IMPORTED_MODULE_0__.nothing}"
+                        text="${row.label}"></tsc-switch>
+        `;
+    }
+    getIconRowHtml(row) {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            ${(0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_9__.isVisible)(!!row.iconSVG, lit__WEBPACK_IMPORTED_MODULE_0__.html `${(0,lit_directives_unsafe_html_js__WEBPACK_IMPORTED_MODULE_2__.unsafeHTML)(row.iconSVG)}`)}
+            ${(0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_9__.isVisible)(!!row.iconURL, lit__WEBPACK_IMPORTED_MODULE_0__.html `<img class="icon-column-image" .src="${row.iconURL}" />`)}
+            <span class="icon-column-content">${row.label}</span>
+        `;
+    }
+    getCheckboxRowHtml(row, rowId) {
+        const selected = this.selection.find(row => row.id === rowId);
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <tsc-checkbox initCheckedState="${!!selected || lit__WEBPACK_IMPORTED_MODULE_0__.nothing}"
+                          disabled="${row.disabled || lit__WEBPACK_IMPORTED_MODULE_0__.nothing}"
+                          @change=${(event) => this.setSelectedRow(rowId, event)}></tsc-checkbox>
+        `;
+    }
+    getRowItem(rowsInfo, column) {
+        const rowItem = rowsInfo[column.itemProperty];
+        let itemContent = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div>${rowItem.value}</div>
+        `;
+        switch (column.type) {
+            case _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType.text:
+                itemContent = this.getTextRowHtml(rowItem);
+                break;
+            case _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType.list:
+                itemContent = this.getListRowHtml(rowsInfo, column);
+                break;
+            case _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType.link:
+                itemContent = this.getLinkRowHtml(rowItem);
+                break;
+            case _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType.date:
+                itemContent = this.getDateRowHtml(rowItem);
+                break;
+            case _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType.priority:
+                itemContent = this.getPriorityRowHtml(rowItem);
+                break;
+            case _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType["switch"]:
+                itemContent = this.getSwitchRowHtml(rowsInfo, column);
+                break;
+            case _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType.icon:
+                itemContent = this.getIconRowHtml(rowItem);
+                break;
+            case _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType.checkbox:
+                itemContent = this.getCheckboxRowHtml(rowItem, rowsInfo.id);
+                break;
+            case _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType.input:
+                itemContent = this.getInputRowHtml(rowsInfo, column);
+                break;
+        }
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="row-item body-3"
+                 @click=${(event) => this._emitRowClicked(event, rowsInfo, column.itemProperty)}>
+                ${itemContent}
+            </div>
+        `;
+    }
+    getHtmlRow(row) {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="row">
+                ${this.columns.map(col => this.getRowItem(row, col))}
+            </div>
+        `;
+    }
+    getHtmlColumn(col) {
+        if (col.type === _table_type__WEBPACK_IMPORTED_MODULE_4__.FieldType.checkbox) {
+            const columnRows = this.items.map(item => item[col.itemProperty]);
+            const selected = columnRows.filter(row => row.value);
+            const allSelected = selected.length === columnRows.length;
+            return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+                <div class="column-header head-5">
+                    <tsc-checkbox @change=${this.selectAll}
+                                  initCheckedState="${allSelected || lit__WEBPACK_IMPORTED_MODULE_0__.nothing}"></tsc-checkbox>
+                </div>
+            `;
+        }
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="column-header head-5">${col.label}</div>
+        `;
+    }
+    scrollData(event) {
+        const newScrollLeft = event.target.scrollLeft;
+        if (newScrollLeft === this._scrollLeft) {
+            return;
+        }
+        this._scrollLeft = newScrollLeft;
+        this.requestUpdate();
+    }
+    render() {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            ${(0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_9__.isVisible)(this.showActionPanel, this.actionPanel)}
+            <div class="container">
+                <div class="header" .scrollLeft=${this._scrollLeft}>
+                    ${this.columns.map(this.getHtmlColumn.bind(this))}
+                </div>
+                <div class="content scroll-white" @scroll=${this.scrollData}>
+                    ${this.items.map(this.getHtmlRow.bind(this))}
+                </div>
+            </div>
+        `;
+    }
+    _emitSelectionChange() {
+        this.requestUpdate();
+        this.dispatchEvent(new CustomEvent(selectionChangeEvent, { detail: this.selection }));
+    }
+    _emitRowClicked(event, row, itemProperty) {
+        console.log(itemProperty);
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_11__.createEvent)(rowClickEvent, {
+            ...event,
+            detail: {
+                row,
+                itemProperty
+            }
+        }));
+    }
+    _emitRowChanged(event, row) {
+        console.log(row);
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_11__.createEvent)(rowChangeEvent, { ...event, detail: row }));
+    }
+    get actionPanel() {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class="action-panel">
+                <!-- TODO: localize -->
+                <tsc-button id="add-button" text='+ Добавить' .styleType=${_button_config_constants__WEBPACK_IMPORTED_MODULE_12__.BaseStyleType.FLAT} @click=${this.addItemButtonClick}></tsc-button>
+            </div>
+        `;
+    }
+    addItemButtonClick() {
+        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_11__.createEvent)(_config_consts__WEBPACK_IMPORTED_MODULE_13__.addItemButtonClickEventName));
+    }
+};
+Table.styles = _style__WEBPACK_IMPORTED_MODULE_7__.stylesBase;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.query)('.container')
+], Table.prototype, "container", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Array })
+], Table.prototype, "columns", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Array })
+], Table.prototype, "items", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean, attribute: 'show-action-panel' })
+], Table.prototype, "showActionPanel", void 0);
+Table = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__.customElementRegistry)(tagName)
+], Table);
+
+
+
+/***/ }),
+
 /***/ "./src/components/table/table.type.ts":
 /*!********************************************!*\
   !*** ./src/components/table/table.type.ts ***!
@@ -7746,6 +10267,51 @@ Divider = __decorate([
     (0,_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_1__.customElementRegistry)('tsc-divider')
 ], Divider);
 
+
+
+/***/ }),
+
+/***/ "./src/components/utils/components/radiobutton-render.ts":
+/*!***************************************************************!*\
+  !*** ./src/components/utils/components/radiobutton-render.ts ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "radioHtmlTemplate": () => (/* binding */ radioHtmlTemplate)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
+/* harmony import */ var _other_event__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../other/event */ "./src/components/utils/other/event.ts");
+/* harmony import */ var _directives_isVisible__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../directives/isVisible */ "./src/components/utils/directives/isVisible.ts");
+
+
+
+
+function emitValueDefault(e, value) {
+    const target = e.target;
+    const detail = { value, checked: target.checked };
+    const changeEvent = (0,_other_event__WEBPACK_IMPORTED_MODULE_2__.createEvent)(e.type, { detail });
+    target.parentElement?.dispatchEvent(changeEvent);
+}
+const radioHtmlTemplate = ({ name, value, text, emitValue = emitValueDefault, disabled = false, error = '' }) => lit__WEBPACK_IMPORTED_MODULE_0__.html `
+        <div class="container">
+            <label class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({ disabled, error })}>
+                <input
+                        class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({ disabled, error })}
+                        type="radio" .name=${name} .value=${value}
+                        @click=${(e) => e.stopPropagation()}
+                        @change=${(e) => {
+    e.stopPropagation();
+    emitValue(e, value);
+}}>
+                ${(0,_directives_isVisible__WEBPACK_IMPORTED_MODULE_3__.isVisible)(!!text, lit__WEBPACK_IMPORTED_MODULE_0__.html `<span class="body-3">${text}</span>`)}
+            </label>
+            ${(0,_directives_isVisible__WEBPACK_IMPORTED_MODULE_3__.isVisible)(!!error, lit__WEBPACK_IMPORTED_MODULE_0__.html `<span class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({ 'error-text': true })}>${error}</span>`)}
+        </div>
+    `;
 
 
 /***/ }),
@@ -8423,6 +10989,95 @@ const PROPERTY_TYPES = {
 
 /***/ }),
 
+/***/ "./src/components/widget/types.ts":
+/*!****************************************!*\
+  !*** ./src/components/widget/types.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SelectorAttributes": () => (/* binding */ SelectorAttributes)
+/* harmony export */ });
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+/* harmony import */ var _accordion_accordion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../accordion/accordion */ "./src/components/accordion/accordion.ts");
+/* harmony import */ var _action_action__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../action/action */ "./src/components/action/action.ts");
+/* harmony import */ var _button_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../button/button */ "./src/components/button/button.ts");
+/* harmony import */ var _button_icon_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../button/icon-button */ "./src/components/button/icon-button.ts");
+/* harmony import */ var _calendar_calendar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../calendar/calendar */ "./src/components/calendar/calendar.ts");
+/* harmony import */ var _calendar_time_picker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../calendar/time-picker */ "./src/components/calendar/time-picker.ts");
+/* harmony import */ var _checkbox_checkbox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../checkbox/checkbox */ "./src/components/checkbox/checkbox.ts");
+/* harmony import */ var _dropdown_dropdown__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../dropdown/dropdown */ "./src/components/dropdown/dropdown.ts");
+/* harmony import */ var _dropdown_dropdown_list__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../dropdown/dropdown-list */ "./src/components/dropdown/dropdown-list.ts");
+/* harmony import */ var _form_inputs_form_inputs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../form-inputs/form-inputs */ "./src/components/form-inputs/form-inputs.ts");
+/* harmony import */ var _input_number_input_number__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../input-number/input-number */ "./src/components/input-number/input-number.ts");
+/* harmony import */ var _input_input__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../input/input */ "./src/components/input/input.ts");
+/* harmony import */ var _message_message__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../message/message */ "./src/components/message/message.ts");
+/* harmony import */ var _paginator_paginator__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../paginator/paginator */ "./src/components/paginator/paginator.ts");
+/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../modal/modal */ "./src/components/modal/modal.ts");
+/* harmony import */ var _progress_bar_progress_bar__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../progress-bar/progress-bar */ "./src/components/progress-bar/progress-bar.ts");
+/* harmony import */ var _radio_group_radioGroup__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../radio-group/radioGroup */ "./src/components/radio-group/radioGroup.ts");
+/* harmony import */ var _radiobutton_radiobutton__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../radiobutton/radiobutton */ "./src/components/radiobutton/radiobutton.ts");
+/* harmony import */ var _spinner_spinner__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../spinner/spinner */ "./src/components/spinner/spinner.ts");
+/* harmony import */ var _switch_switch__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../switch/switch */ "./src/components/switch/switch.ts");
+/* harmony import */ var _tab_bar_tabBar__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../tab-bar/tabBar */ "./src/components/tab-bar/tabBar.ts");
+/* harmony import */ var _table_table__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../table/table */ "./src/components/table/table.ts");
+/* harmony import */ var _modal_form_modal_form__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../modal-form/modal-form */ "./src/components/modal-form/modal-form.ts");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const SelectorAttributes = {
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Accordion]: _accordion_accordion__WEBPACK_IMPORTED_MODULE_1__.Accordion,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Action]: _action_action__WEBPACK_IMPORTED_MODULE_2__.Action,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Input]: _input_input__WEBPACK_IMPORTED_MODULE_12__.Input,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.InputNumber]: _input_number_input_number__WEBPACK_IMPORTED_MODULE_11__.InputNumber,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Button]: _button_button__WEBPACK_IMPORTED_MODULE_3__.Button,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.IconButton]: _button_icon_button__WEBPACK_IMPORTED_MODULE_4__.IconButton,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Calendar]: _calendar_calendar__WEBPACK_IMPORTED_MODULE_5__.Calendar,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.TimePicker]: _calendar_time_picker__WEBPACK_IMPORTED_MODULE_6__.TimePicker,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Checkbox]: _checkbox_checkbox__WEBPACK_IMPORTED_MODULE_7__.Checkbox,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Dropdown]: _dropdown_dropdown__WEBPACK_IMPORTED_MODULE_8__.Dropdown,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.List]: _dropdown_dropdown_list__WEBPACK_IMPORTED_MODULE_9__.List,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Form]: _form_inputs_form_inputs__WEBPACK_IMPORTED_MODULE_10__.FormInputs,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Message]: _message_message__WEBPACK_IMPORTED_MODULE_13__.Message,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Paginator]: _paginator_paginator__WEBPACK_IMPORTED_MODULE_14__.Paginator,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Modal]: _modal_modal__WEBPACK_IMPORTED_MODULE_15__.Modal,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.ModalForm]: _modal_form_modal_form__WEBPACK_IMPORTED_MODULE_23__.ModalForm,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.ProgressBar]: _progress_bar_progress_bar__WEBPACK_IMPORTED_MODULE_16__.ProgressBar,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.RadioGroup]: _radio_group_radioGroup__WEBPACK_IMPORTED_MODULE_17__.RadioGroup,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.RadioButton]: _radiobutton_radiobutton__WEBPACK_IMPORTED_MODULE_18__.RadioButton,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Spinner]: _spinner_spinner__WEBPACK_IMPORTED_MODULE_19__.Spinner,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Switch]: _switch_switch__WEBPACK_IMPORTED_MODULE_20__.Switch,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.TabBar]: _tab_bar_tabBar__WEBPACK_IMPORTED_MODULE_21__.TabBar,
+    [_shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Table]: _table_table__WEBPACK_IMPORTED_MODULE_22__.Table,
+};
+console.log(SelectorAttributes);
+
+
+/***/ }),
+
 /***/ "./src/shared/types.ts":
 /*!*****************************!*\
   !*** ./src/shared/types.ts ***!
@@ -8612,6 +11267,63 @@ const getCompatibleStyle = supportsAdoptingStyleSheets
     ? (s) => s
     : (s) => s instanceof CSSStyleSheet ? cssResultFromStyleSheet(s) : s;
 //# sourceMappingURL=css-tag.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@lit/reactive-element/development/decorators.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@lit/reactive-element/development/decorators.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "customElement": () => (/* reexport safe */ _decorators_custom_element_js__WEBPACK_IMPORTED_MODULE_1__.customElement),
+/* harmony export */   "decorateProperty": () => (/* reexport safe */ _decorators_base_js__WEBPACK_IMPORTED_MODULE_0__.decorateProperty),
+/* harmony export */   "eventOptions": () => (/* reexport safe */ _decorators_event_options_js__WEBPACK_IMPORTED_MODULE_4__.eventOptions),
+/* harmony export */   "legacyPrototypeMethod": () => (/* reexport safe */ _decorators_base_js__WEBPACK_IMPORTED_MODULE_0__.legacyPrototypeMethod),
+/* harmony export */   "property": () => (/* reexport safe */ _decorators_property_js__WEBPACK_IMPORTED_MODULE_2__.property),
+/* harmony export */   "query": () => (/* reexport safe */ _decorators_query_js__WEBPACK_IMPORTED_MODULE_5__.query),
+/* harmony export */   "queryAll": () => (/* reexport safe */ _decorators_query_all_js__WEBPACK_IMPORTED_MODULE_6__.queryAll),
+/* harmony export */   "queryAssignedElements": () => (/* reexport safe */ _decorators_query_assigned_elements_js__WEBPACK_IMPORTED_MODULE_8__.queryAssignedElements),
+/* harmony export */   "queryAssignedNodes": () => (/* reexport safe */ _decorators_query_assigned_nodes_js__WEBPACK_IMPORTED_MODULE_9__.queryAssignedNodes),
+/* harmony export */   "queryAsync": () => (/* reexport safe */ _decorators_query_async_js__WEBPACK_IMPORTED_MODULE_7__.queryAsync),
+/* harmony export */   "standardPrototypeMethod": () => (/* reexport safe */ _decorators_base_js__WEBPACK_IMPORTED_MODULE_0__.standardPrototypeMethod),
+/* harmony export */   "state": () => (/* reexport safe */ _decorators_state_js__WEBPACK_IMPORTED_MODULE_3__.state)
+/* harmony export */ });
+/* harmony import */ var _decorators_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./decorators/base.js */ "./node_modules/@lit/reactive-element/development/decorators/base.js");
+/* harmony import */ var _decorators_custom_element_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./decorators/custom-element.js */ "./node_modules/@lit/reactive-element/development/decorators/custom-element.js");
+/* harmony import */ var _decorators_property_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./decorators/property.js */ "./node_modules/@lit/reactive-element/development/decorators/property.js");
+/* harmony import */ var _decorators_state_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./decorators/state.js */ "./node_modules/@lit/reactive-element/development/decorators/state.js");
+/* harmony import */ var _decorators_event_options_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./decorators/event-options.js */ "./node_modules/@lit/reactive-element/development/decorators/event-options.js");
+/* harmony import */ var _decorators_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./decorators/query.js */ "./node_modules/@lit/reactive-element/development/decorators/query.js");
+/* harmony import */ var _decorators_query_all_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./decorators/query-all.js */ "./node_modules/@lit/reactive-element/development/decorators/query-all.js");
+/* harmony import */ var _decorators_query_async_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./decorators/query-async.js */ "./node_modules/@lit/reactive-element/development/decorators/query-async.js");
+/* harmony import */ var _decorators_query_assigned_elements_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./decorators/query-assigned-elements.js */ "./node_modules/@lit/reactive-element/development/decorators/query-assigned-elements.js");
+/* harmony import */ var _decorators_query_assigned_nodes_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./decorators/query-assigned-nodes.js */ "./node_modules/@lit/reactive-element/development/decorators/query-assigned-nodes.js");
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+/*
+ * IMPORTANT: For compatibility with tsickle and the Closure JS compiler, all
+ * property decorators (but not class decorators) in this file that have
+ * an @ExportDecoratedItems annotation must be defined as a regular function,
+ * not an arrow function.
+ */
+
+
+
+
+
+
+
+
+
+
+//# sourceMappingURL=decorators.js.map
 
 /***/ }),
 
@@ -10672,6 +13384,473 @@ if (DEV_MODE && globalThis.litElementVersions.length > 1) {
 
 /***/ }),
 
+/***/ "./node_modules/lit-html/development/async-directive.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/lit-html/development/async-directive.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AsyncDirective": () => (/* binding */ AsyncDirective),
+/* harmony export */   "Directive": () => (/* reexport safe */ _directive_js__WEBPACK_IMPORTED_MODULE_1__.Directive),
+/* harmony export */   "PartType": () => (/* reexport safe */ _directive_js__WEBPACK_IMPORTED_MODULE_1__.PartType),
+/* harmony export */   "directive": () => (/* reexport safe */ _directive_js__WEBPACK_IMPORTED_MODULE_1__.directive)
+/* harmony export */ });
+/* harmony import */ var _directive_helpers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./directive-helpers.js */ "./node_modules/lit-html/development/directive-helpers.js");
+/* harmony import */ var _directive_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./directive.js */ "./node_modules/lit-html/development/directive.js");
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+
+
+const DEV_MODE = true;
+/**
+ * Recursively walks down the tree of Parts/TemplateInstances/Directives to set
+ * the connected state of directives and run `disconnected`/ `reconnected`
+ * callbacks.
+ *
+ * @return True if there were children to disconnect; false otherwise
+ */
+const notifyChildrenConnectedChanged = (parent, isConnected) => {
+    var _a, _b;
+    const children = parent._$disconnectableChildren;
+    if (children === undefined) {
+        return false;
+    }
+    for (const obj of children) {
+        // The existence of `_$notifyDirectiveConnectionChanged` is used as a "brand" to
+        // disambiguate AsyncDirectives from other DisconnectableChildren
+        // (as opposed to using an instanceof check to know when to call it); the
+        // redundancy of "Directive" in the API name is to avoid conflicting with
+        // `_$notifyConnectionChanged`, which exists `ChildParts` which are also in
+        // this list
+        // Disconnect Directive (and any nested directives contained within)
+        // This property needs to remain unminified.
+        (_b = (_a = obj)['_$notifyDirectiveConnectionChanged']) === null || _b === void 0 ? void 0 : _b.call(_a, isConnected, false);
+        // Disconnect Part/TemplateInstance
+        notifyChildrenConnectedChanged(obj, isConnected);
+    }
+    return true;
+};
+/**
+ * Removes the given child from its parent list of disconnectable children, and
+ * if the parent list becomes empty as a result, removes the parent from its
+ * parent, and so forth up the tree when that causes subsequent parent lists to
+ * become empty.
+ */
+const removeDisconnectableFromParent = (obj) => {
+    let parent, children;
+    do {
+        if ((parent = obj._$parent) === undefined) {
+            break;
+        }
+        children = parent._$disconnectableChildren;
+        children.delete(obj);
+        obj = parent;
+    } while ((children === null || children === void 0 ? void 0 : children.size) === 0);
+};
+const addDisconnectableToParent = (obj) => {
+    // Climb the parent tree, creating a sparse tree of children needing
+    // disconnection
+    for (let parent; (parent = obj._$parent); obj = parent) {
+        let children = parent._$disconnectableChildren;
+        if (children === undefined) {
+            parent._$disconnectableChildren = children = new Set();
+        }
+        else if (children.has(obj)) {
+            // Once we've reached a parent that already contains this child, we
+            // can short-circuit
+            break;
+        }
+        children.add(obj);
+        installDisconnectAPI(parent);
+    }
+};
+/**
+ * Changes the parent reference of the ChildPart, and updates the sparse tree of
+ * Disconnectable children accordingly.
+ *
+ * Note, this method will be patched onto ChildPart instances and called from
+ * the core code when parts are moved between different parents.
+ */
+function reparentDisconnectables(newParent) {
+    if (this._$disconnectableChildren !== undefined) {
+        removeDisconnectableFromParent(this);
+        this._$parent = newParent;
+        addDisconnectableToParent(this);
+    }
+    else {
+        this._$parent = newParent;
+    }
+}
+/**
+ * Sets the connected state on any directives contained within the committed
+ * value of this part (i.e. within a TemplateInstance or iterable of
+ * ChildParts) and runs their `disconnected`/`reconnected`s, as well as within
+ * any directives stored on the ChildPart (when `valueOnly` is false).
+ *
+ * `isClearingValue` should be passed as `true` on a top-level part that is
+ * clearing itself, and not as a result of recursively disconnecting directives
+ * as part of a `clear` operation higher up the tree. This both ensures that any
+ * directive on this ChildPart that produced a value that caused the clear
+ * operation is not disconnected, and also serves as a performance optimization
+ * to avoid needless bookkeeping when a subtree is going away; when clearing a
+ * subtree, only the top-most part need to remove itself from the parent.
+ *
+ * `fromPartIndex` is passed only in the case of a partial `_clear` running as a
+ * result of truncating an iterable.
+ *
+ * Note, this method will be patched onto ChildPart instances and called from the
+ * core code when parts are cleared or the connection state is changed by the
+ * user.
+ */
+function notifyChildPartConnectedChanged(isConnected, isClearingValue = false, fromPartIndex = 0) {
+    const value = this._$committedValue;
+    const children = this._$disconnectableChildren;
+    if (children === undefined || children.size === 0) {
+        return;
+    }
+    if (isClearingValue) {
+        if (Array.isArray(value)) {
+            // Iterable case: Any ChildParts created by the iterable should be
+            // disconnected and removed from this ChildPart's disconnectable
+            // children (starting at `fromPartIndex` in the case of truncation)
+            for (let i = fromPartIndex; i < value.length; i++) {
+                notifyChildrenConnectedChanged(value[i], false);
+                removeDisconnectableFromParent(value[i]);
+            }
+        }
+        else if (value != null) {
+            // TemplateInstance case: If the value has disconnectable children (will
+            // only be in the case that it is a TemplateInstance), we disconnect it
+            // and remove it from this ChildPart's disconnectable children
+            notifyChildrenConnectedChanged(value, false);
+            removeDisconnectableFromParent(value);
+        }
+    }
+    else {
+        notifyChildrenConnectedChanged(this, isConnected);
+    }
+}
+/**
+ * Patches disconnection API onto ChildParts.
+ */
+const installDisconnectAPI = (obj) => {
+    var _a, _b;
+    var _c, _d;
+    if (obj.type == _directive_js__WEBPACK_IMPORTED_MODULE_1__.PartType.CHILD) {
+        (_a = (_c = obj)._$notifyConnectionChanged) !== null && _a !== void 0 ? _a : (_c._$notifyConnectionChanged = notifyChildPartConnectedChanged);
+        (_b = (_d = obj)._$reparentDisconnectables) !== null && _b !== void 0 ? _b : (_d._$reparentDisconnectables = reparentDisconnectables);
+    }
+};
+/**
+ * An abstract `Directive` base class whose `disconnected` method will be
+ * called when the part containing the directive is cleared as a result of
+ * re-rendering, or when the user calls `part.setConnected(false)` on
+ * a part that was previously rendered containing the directive (as happens
+ * when e.g. a LitElement disconnects from the DOM).
+ *
+ * If `part.setConnected(true)` is subsequently called on a
+ * containing part, the directive's `reconnected` method will be called prior
+ * to its next `update`/`render` callbacks. When implementing `disconnected`,
+ * `reconnected` should also be implemented to be compatible with reconnection.
+ *
+ * Note that updates may occur while the directive is disconnected. As such,
+ * directives should generally check the `this.isConnected` flag during
+ * render/update to determine whether it is safe to subscribe to resources
+ * that may prevent garbage collection.
+ */
+class AsyncDirective extends _directive_js__WEBPACK_IMPORTED_MODULE_1__.Directive {
+    constructor() {
+        super(...arguments);
+        // @internal
+        this._$disconnectableChildren = undefined;
+    }
+    /**
+     * Initialize the part with internal fields
+     * @param part
+     * @param parent
+     * @param attributeIndex
+     */
+    _$initialize(part, parent, attributeIndex) {
+        super._$initialize(part, parent, attributeIndex);
+        addDisconnectableToParent(this);
+        this.isConnected = part._$isConnected;
+    }
+    // This property needs to remain unminified.
+    /**
+     * Called from the core code when a directive is going away from a part (in
+     * which case `shouldRemoveFromParent` should be true), and from the
+     * `setChildrenConnected` helper function when recursively changing the
+     * connection state of a tree (in which case `shouldRemoveFromParent` should
+     * be false).
+     *
+     * @param isConnected
+     * @param isClearingDirective - True when the directive itself is being
+     *     removed; false when the tree is being disconnected
+     * @internal
+     */
+    ['_$notifyDirectiveConnectionChanged'](isConnected, isClearingDirective = true) {
+        var _a, _b;
+        if (isConnected !== this.isConnected) {
+            this.isConnected = isConnected;
+            if (isConnected) {
+                (_a = this.reconnected) === null || _a === void 0 ? void 0 : _a.call(this);
+            }
+            else {
+                (_b = this.disconnected) === null || _b === void 0 ? void 0 : _b.call(this);
+            }
+        }
+        if (isClearingDirective) {
+            notifyChildrenConnectedChanged(this, isConnected);
+            removeDisconnectableFromParent(this);
+        }
+    }
+    /**
+     * Sets the value of the directive's Part outside the normal `update`/`render`
+     * lifecycle of a directive.
+     *
+     * This method should not be called synchronously from a directive's `update`
+     * or `render`.
+     *
+     * @param directive The directive to update
+     * @param value The value to set
+     */
+    setValue(value) {
+        if ((0,_directive_helpers_js__WEBPACK_IMPORTED_MODULE_0__.isSingleExpression)(this.__part)) {
+            this.__part._$setValue(value, this);
+        }
+        else {
+            // this.__attributeIndex will be defined in this case, but
+            // assert it in dev mode
+            if (DEV_MODE && this.__attributeIndex === undefined) {
+                throw new Error(`Expected this.__attributeIndex to be a number`);
+            }
+            const newValues = [...this.__part._$committedValue];
+            newValues[this.__attributeIndex] = value;
+            this.__part._$setValue(newValues, this, 0);
+        }
+    }
+    /**
+     * User callbacks for implementing logic to release any resources/subscriptions
+     * that may have been retained by this directive. Since directives may also be
+     * re-connected, `reconnected` should also be implemented to restore the
+     * working state of the directive prior to the next render.
+     */
+    disconnected() { }
+    reconnected() { }
+}
+//# sourceMappingURL=async-directive.js.map
+
+/***/ }),
+
+/***/ "./node_modules/lit-html/development/directive-helpers.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/lit-html/development/directive-helpers.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TemplateResultType": () => (/* binding */ TemplateResultType),
+/* harmony export */   "clearPart": () => (/* binding */ clearPart),
+/* harmony export */   "getCommittedValue": () => (/* binding */ getCommittedValue),
+/* harmony export */   "getDirectiveClass": () => (/* binding */ getDirectiveClass),
+/* harmony export */   "insertPart": () => (/* binding */ insertPart),
+/* harmony export */   "isDirectiveResult": () => (/* binding */ isDirectiveResult),
+/* harmony export */   "isPrimitive": () => (/* binding */ isPrimitive),
+/* harmony export */   "isSingleExpression": () => (/* binding */ isSingleExpression),
+/* harmony export */   "isTemplateResult": () => (/* binding */ isTemplateResult),
+/* harmony export */   "removePart": () => (/* binding */ removePart),
+/* harmony export */   "setChildPartValue": () => (/* binding */ setChildPartValue),
+/* harmony export */   "setCommittedValue": () => (/* binding */ setCommittedValue)
+/* harmony export */ });
+/* harmony import */ var _lit_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lit-html.js */ "./node_modules/lit-html/development/lit-html.js");
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+var _a, _b;
+
+const { _ChildPart: ChildPart } = _lit_html_js__WEBPACK_IMPORTED_MODULE_0__._$LH;
+const ENABLE_SHADYDOM_NOPATCH = true;
+const wrap = ENABLE_SHADYDOM_NOPATCH &&
+    ((_a = window.ShadyDOM) === null || _a === void 0 ? void 0 : _a.inUse) &&
+    ((_b = window.ShadyDOM) === null || _b === void 0 ? void 0 : _b.noPatch) === true
+    ? window.ShadyDOM.wrap
+    : (node) => node;
+/**
+ * Tests if a value is a primitive value.
+ *
+ * See https://tc39.github.io/ecma262/#sec-typeof-operator
+ */
+const isPrimitive = (value) => value === null || (typeof value != 'object' && typeof value != 'function');
+const TemplateResultType = {
+    HTML: 1,
+    SVG: 2,
+};
+/**
+ * Tests if a value is a TemplateResult.
+ */
+const isTemplateResult = (value, type) => type === undefined
+    ? // This property needs to remain unminified.
+        (value === null || value === void 0 ? void 0 : value['_$litType$']) !== undefined
+    : (value === null || value === void 0 ? void 0 : value['_$litType$']) === type;
+/**
+ * Tests if a value is a DirectiveResult.
+ */
+const isDirectiveResult = (value) => 
+// This property needs to remain unminified.
+(value === null || value === void 0 ? void 0 : value['_$litDirective$']) !== undefined;
+/**
+ * Retrieves the Directive class for a DirectiveResult
+ */
+const getDirectiveClass = (value) => 
+// This property needs to remain unminified.
+value === null || value === void 0 ? void 0 : value['_$litDirective$'];
+/**
+ * Tests whether a part has only a single-expression with no strings to
+ * interpolate between.
+ *
+ * Only AttributePart and PropertyPart can have multiple expressions.
+ * Multi-expression parts have a `strings` property and single-expression
+ * parts do not.
+ */
+const isSingleExpression = (part) => part.strings === undefined;
+const createMarker = () => document.createComment('');
+/**
+ * Inserts a ChildPart into the given container ChildPart's DOM, either at the
+ * end of the container ChildPart, or before the optional `refPart`.
+ *
+ * This does not add the part to the containerPart's committed value. That must
+ * be done by callers.
+ *
+ * @param containerPart Part within which to add the new ChildPart
+ * @param refPart Part before which to add the new ChildPart; when omitted the
+ *     part added to the end of the `containerPart`
+ * @param part Part to insert, or undefined to create a new part
+ */
+const insertPart = (containerPart, refPart, part) => {
+    var _a;
+    const container = wrap(containerPart._$startNode).parentNode;
+    const refNode = refPart === undefined ? containerPart._$endNode : refPart._$startNode;
+    if (part === undefined) {
+        const startNode = wrap(container).insertBefore(createMarker(), refNode);
+        const endNode = wrap(container).insertBefore(createMarker(), refNode);
+        part = new ChildPart(startNode, endNode, containerPart, containerPart.options);
+    }
+    else {
+        const endNode = wrap(part._$endNode).nextSibling;
+        const oldParent = part._$parent;
+        const parentChanged = oldParent !== containerPart;
+        if (parentChanged) {
+            (_a = part._$reparentDisconnectables) === null || _a === void 0 ? void 0 : _a.call(part, containerPart);
+            // Note that although `_$reparentDisconnectables` updates the part's
+            // `_$parent` reference after unlinking from its current parent, that
+            // method only exists if Disconnectables are present, so we need to
+            // unconditionally set it here
+            part._$parent = containerPart;
+            // Since the _$isConnected getter is somewhat costly, only
+            // read it once we know the subtree has directives that need
+            // to be notified
+            let newConnectionState;
+            if (part._$notifyConnectionChanged !== undefined &&
+                (newConnectionState = containerPart._$isConnected) !==
+                    oldParent._$isConnected) {
+                part._$notifyConnectionChanged(newConnectionState);
+            }
+        }
+        if (endNode !== refNode || parentChanged) {
+            let start = part._$startNode;
+            while (start !== endNode) {
+                const n = wrap(start).nextSibling;
+                wrap(container).insertBefore(start, refNode);
+                start = n;
+            }
+        }
+    }
+    return part;
+};
+/**
+ * Sets the value of a Part.
+ *
+ * Note that this should only be used to set/update the value of user-created
+ * parts (i.e. those created using `insertPart`); it should not be used
+ * by directives to set the value of the directive's container part. Directives
+ * should return a value from `update`/`render` to update their part state.
+ *
+ * For directives that require setting their part value asynchronously, they
+ * should extend `AsyncDirective` and call `this.setValue()`.
+ *
+ * @param part Part to set
+ * @param value Value to set
+ * @param index For `AttributePart`s, the index to set
+ * @param directiveParent Used internally; should not be set by user
+ */
+const setChildPartValue = (part, value, directiveParent = part) => {
+    part._$setValue(value, directiveParent);
+    return part;
+};
+// A sentinal value that can never appear as a part value except when set by
+// live(). Used to force a dirty-check to fail and cause a re-render.
+const RESET_VALUE = {};
+/**
+ * Sets the committed value of a ChildPart directly without triggering the
+ * commit stage of the part.
+ *
+ * This is useful in cases where a directive needs to update the part such
+ * that the next update detects a value change or not. When value is omitted,
+ * the next update will be guaranteed to be detected as a change.
+ *
+ * @param part
+ * @param value
+ */
+const setCommittedValue = (part, value = RESET_VALUE) => (part._$committedValue = value);
+/**
+ * Returns the committed value of a ChildPart.
+ *
+ * The committed value is used for change detection and efficient updates of
+ * the part. It can differ from the value set by the template or directive in
+ * cases where the template value is transformed before being commited.
+ *
+ * - `TemplateResult`s are committed as a `TemplateInstance`
+ * - Iterables are committed as `Array<ChildPart>`
+ * - All other types are committed as the template value or value returned or
+ *   set by a directive.
+ *
+ * @param part
+ */
+const getCommittedValue = (part) => part._$committedValue;
+/**
+ * Removes a ChildPart from the DOM, including any of its content.
+ *
+ * @param part The Part to remove
+ */
+const removePart = (part) => {
+    var _a;
+    (_a = part._$notifyConnectionChanged) === null || _a === void 0 ? void 0 : _a.call(part, false, true);
+    let start = part._$startNode;
+    const end = wrap(part._$endNode).nextSibling;
+    while (start !== end) {
+        const n = wrap(start).nextSibling;
+        wrap(start).remove();
+        start = n;
+    }
+};
+const clearPart = (part) => {
+    part._$clear();
+};
+//# sourceMappingURL=directive-helpers.js.map
+
+/***/ }),
+
 /***/ "./node_modules/lit-html/development/directive.js":
 /*!********************************************************!*\
   !*** ./node_modules/lit-html/development/directive.js ***!
@@ -10871,6 +14050,146 @@ const ifDefined = (value) => value !== null && value !== void 0 ? value : _lit_h
 
 /***/ }),
 
+/***/ "./node_modules/lit-html/development/directives/ref.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/lit-html/development/directives/ref.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createRef": () => (/* binding */ createRef),
+/* harmony export */   "ref": () => (/* binding */ ref)
+/* harmony export */ });
+/* harmony import */ var _lit_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lit-html.js */ "./node_modules/lit-html/development/lit-html.js");
+/* harmony import */ var _async_directive_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../async-directive.js */ "./node_modules/lit-html/development/async-directive.js");
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+
+/**
+ * Creates a new Ref object, which is container for a reference to an element.
+ */
+const createRef = () => new Ref();
+/**
+ * An object that holds a ref value.
+ */
+class Ref {
+}
+// When callbacks are used for refs, this map tracks the last value the callback
+// was called with, for ensuring a directive doesn't clear the ref if the ref
+// has already been rendered to a new spot. It is double-keyed on both the
+// context (`options.host`) and the callback, since we auto-bind class methods
+// to `options.host`.
+const lastElementForContextAndCallback = new WeakMap();
+class RefDirective extends _async_directive_js__WEBPACK_IMPORTED_MODULE_1__.AsyncDirective {
+    render(_ref) {
+        return _lit_html_js__WEBPACK_IMPORTED_MODULE_0__.nothing;
+    }
+    update(part, [ref]) {
+        var _a;
+        const refChanged = ref !== this._ref;
+        if (refChanged && this._ref !== undefined) {
+            // The ref passed to the directive has changed;
+            // unset the previous ref's value
+            this._updateRefValue(undefined);
+        }
+        if (refChanged || this._lastElementForRef !== this._element) {
+            // We either got a new ref or this is the first render;
+            // store the ref/element & update the ref value
+            this._ref = ref;
+            this._context = (_a = part.options) === null || _a === void 0 ? void 0 : _a.host;
+            this._updateRefValue((this._element = part.element));
+        }
+        return _lit_html_js__WEBPACK_IMPORTED_MODULE_0__.nothing;
+    }
+    _updateRefValue(element) {
+        var _a;
+        if (typeof this._ref === 'function') {
+            // If the current ref was called with a previous value, call with
+            // `undefined`; We do this to ensure callbacks are called in a consistent
+            // way regardless of whether a ref might be moving up in the tree (in
+            // which case it would otherwise be called with the new value before the
+            // previous one unsets it) and down in the tree (where it would be unset
+            // before being set). Note that element lookup is keyed by
+            // both the context and the callback, since we allow passing unbound
+            // functions that are called on options.host, and we want to treat
+            // these as unique "instances" of a function.
+            const context = (_a = this._context) !== null && _a !== void 0 ? _a : globalThis;
+            let lastElementForCallback = lastElementForContextAndCallback.get(context);
+            if (lastElementForCallback === undefined) {
+                lastElementForCallback = new WeakMap();
+                lastElementForContextAndCallback.set(context, lastElementForCallback);
+            }
+            if (lastElementForCallback.get(this._ref) !== undefined) {
+                this._ref.call(this._context, undefined);
+            }
+            lastElementForCallback.set(this._ref, element);
+            // Call the ref with the new element value
+            if (element !== undefined) {
+                this._ref.call(this._context, element);
+            }
+        }
+        else {
+            this._ref.value = element;
+        }
+    }
+    get _lastElementForRef() {
+        var _a, _b, _c;
+        return typeof this._ref === 'function'
+            ? (_b = lastElementForContextAndCallback
+                .get((_a = this._context) !== null && _a !== void 0 ? _a : globalThis)) === null || _b === void 0 ? void 0 : _b.get(this._ref)
+            : (_c = this._ref) === null || _c === void 0 ? void 0 : _c.value;
+    }
+    disconnected() {
+        // Only clear the box if our element is still the one in it (i.e. another
+        // directive instance hasn't rendered its element to it before us); that
+        // only happens in the event of the directive being cleared (not via manual
+        // disconnection)
+        if (this._lastElementForRef === this._element) {
+            this._updateRefValue(undefined);
+        }
+    }
+    reconnected() {
+        // If we were manually disconnected, we can safely put our element back in
+        // the box, since no rendering could have occurred to change its state
+        this._updateRefValue(this._element);
+    }
+}
+/**
+ * Sets the value of a Ref object or calls a ref callback with the element it's
+ * bound to.
+ *
+ * A Ref object acts as a container for a reference to an element. A ref
+ * callback is a function that takes an element as its only argument.
+ *
+ * The ref directive sets the value of the Ref object or calls the ref callback
+ * during rendering, if the referenced element changed.
+ *
+ * Note: If a ref callback is rendered to a different element position or is
+ * removed in a subsequent render, it will first be called with `undefined`,
+ * followed by another call with the new element it was rendered to (if any).
+ *
+ * ```js
+ * // Using Ref object
+ * const inputRef = createRef();
+ * render(html`<input ${ref(inputRef)}>`, container);
+ * inputRef.value.focus();
+ *
+ * // Using callback
+ * const callback = (inputElement) => inputElement.focus();
+ * render(html`<input ${ref(callback)}>`, container);
+ * ```
+ */
+const ref = (0,_async_directive_js__WEBPACK_IMPORTED_MODULE_1__.directive)(RefDirective);
+//# sourceMappingURL=ref.js.map
+
+/***/ }),
+
 /***/ "./node_modules/lit-html/development/directives/style-map.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/lit-html/development/directives/style-map.js ***!
@@ -10985,6 +14304,84 @@ class StyleMapDirective extends _directive_js__WEBPACK_IMPORTED_MODULE_1__.Direc
  */
 const styleMap = (0,_directive_js__WEBPACK_IMPORTED_MODULE_1__.directive)(StyleMapDirective);
 //# sourceMappingURL=style-map.js.map
+
+/***/ }),
+
+/***/ "./node_modules/lit-html/development/directives/unsafe-html.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/lit-html/development/directives/unsafe-html.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "UnsafeHTMLDirective": () => (/* binding */ UnsafeHTMLDirective),
+/* harmony export */   "unsafeHTML": () => (/* binding */ unsafeHTML)
+/* harmony export */ });
+/* harmony import */ var _lit_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lit-html.js */ "./node_modules/lit-html/development/lit-html.js");
+/* harmony import */ var _directive_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../directive.js */ "./node_modules/lit-html/development/directive.js");
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+
+const HTML_RESULT = 1;
+class UnsafeHTMLDirective extends _directive_js__WEBPACK_IMPORTED_MODULE_1__.Directive {
+    constructor(partInfo) {
+        super(partInfo);
+        this._value = _lit_html_js__WEBPACK_IMPORTED_MODULE_0__.nothing;
+        if (partInfo.type !== _directive_js__WEBPACK_IMPORTED_MODULE_1__.PartType.CHILD) {
+            throw new Error(`${this.constructor.directiveName}() can only be used in child bindings`);
+        }
+    }
+    render(value) {
+        if (value === _lit_html_js__WEBPACK_IMPORTED_MODULE_0__.nothing || value == null) {
+            this._templateResult = undefined;
+            return (this._value = value);
+        }
+        if (value === _lit_html_js__WEBPACK_IMPORTED_MODULE_0__.noChange) {
+            return value;
+        }
+        if (typeof value != 'string') {
+            throw new Error(`${this.constructor.directiveName}() called with a non-string value`);
+        }
+        if (value === this._value) {
+            return this._templateResult;
+        }
+        this._value = value;
+        const strings = [value];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        strings.raw = strings;
+        // WARNING: impersonating a TemplateResult like this is extremely
+        // dangerous. Third-party directives should not do this.
+        return (this._templateResult = {
+            // Cast to a known set of integers that satisfy ResultType so that we
+            // don't have to export ResultType and possibly encourage this pattern.
+            // This property needs to remain unminified.
+            ['_$litType$']: this.constructor
+                .resultType,
+            strings,
+            values: [],
+        });
+    }
+}
+UnsafeHTMLDirective.directiveName = 'unsafeHTML';
+UnsafeHTMLDirective.resultType = HTML_RESULT;
+/**
+ * Renders the result as HTML, rather than text.
+ *
+ * The values `undefined`, `null`, and `nothing`, will all result in no content
+ * (empty string) being rendered.
+ *
+ * Note, this is unsafe to use with any user-provided input that hasn't been
+ * sanitized or escaped, as it may lead to cross-site-scripting
+ * vulnerabilities.
+ */
+const unsafeHTML = (0,_directive_js__WEBPACK_IMPORTED_MODULE_1__.directive)(UnsafeHTMLDirective);
+//# sourceMappingURL=unsafe-html.js.map
 
 /***/ }),
 
@@ -12508,6 +15905,164 @@ if (DEV_MODE && global.litHtmlVersions.length > 1) {
 
 /***/ }),
 
+/***/ "./node_modules/lit-html/development/static.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/lit-html/development/static.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "html": () => (/* binding */ html),
+/* harmony export */   "literal": () => (/* binding */ literal),
+/* harmony export */   "svg": () => (/* binding */ svg),
+/* harmony export */   "unsafeStatic": () => (/* binding */ unsafeStatic),
+/* harmony export */   "withStatic": () => (/* binding */ withStatic)
+/* harmony export */ });
+/* harmony import */ var _lit_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lit-html.js */ "./node_modules/lit-html/development/lit-html.js");
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+// Any new exports need to be added to the export statement in
+// `packages/lit/src/index.all.ts`.
+
+/**
+ * Prevents JSON injection attacks.
+ *
+ * The goals of this brand:
+ *   1) fast to check
+ *   2) code is small on the wire
+ *   3) multiple versions of Lit in a single page will all produce mutually
+ *      interoperable StaticValues
+ *   4) normal JSON.parse (without an unusual reviver) can not produce a
+ *      StaticValue
+ *
+ * Symbols satisfy (1), (2), and (4). We use Symbol.for to satisfy (3), but
+ * we don't care about the key, so we break ties via (2) and use the empty
+ * string.
+ */
+const brand = Symbol.for('');
+/** Safely extracts the string part of a StaticValue. */
+const unwrapStaticValue = (value) => {
+    if ((value === null || value === void 0 ? void 0 : value.r) !== brand) {
+        return undefined;
+    }
+    return value === null || value === void 0 ? void 0 : value['_$litStatic$'];
+};
+/**
+ * Wraps a string so that it behaves like part of the static template
+ * strings instead of a dynamic value.
+ *
+ * Users must take care to ensure that adding the static string to the template
+ * results in well-formed HTML, or else templates may break unexpectedly.
+ *
+ * Note that this function is unsafe to use on untrusted content, as it will be
+ * directly parsed into HTML. Do not pass user input to this function
+ * without sanitizing it.
+ *
+ * Static values can be changed, but they will cause a complete re-render
+ * since they effectively create a new template.
+ */
+const unsafeStatic = (value) => ({
+    ['_$litStatic$']: value,
+    r: brand,
+});
+const textFromStatic = (value) => {
+    if (value['_$litStatic$'] !== undefined) {
+        return value['_$litStatic$'];
+    }
+    else {
+        throw new Error(`Value passed to 'literal' function must be a 'literal' result: ${value}. Use 'unsafeStatic' to pass non-literal values, but
+            take care to ensure page security.`);
+    }
+};
+/**
+ * Tags a string literal so that it behaves like part of the static template
+ * strings instead of a dynamic value.
+ *
+ * The only values that may be used in template expressions are other tagged
+ * `literal` results or `unsafeStatic` values (note that untrusted content
+ * should never be passed to `unsafeStatic`).
+ *
+ * Users must take care to ensure that adding the static string to the template
+ * results in well-formed HTML, or else templates may break unexpectedly.
+ *
+ * Static values can be changed, but they will cause a complete re-render since
+ * they effectively create a new template.
+ */
+const literal = (strings, ...values) => ({
+    ['_$litStatic$']: values.reduce((acc, v, idx) => acc + textFromStatic(v) + strings[idx + 1], strings[0]),
+    r: brand,
+});
+const stringsCache = new Map();
+/**
+ * Wraps a lit-html template tag (`html` or `svg`) to add static value support.
+ */
+const withStatic = (coreTag) => (strings, ...values) => {
+    const l = values.length;
+    let staticValue;
+    let dynamicValue;
+    const staticStrings = [];
+    const dynamicValues = [];
+    let i = 0;
+    let hasStatics = false;
+    let s;
+    while (i < l) {
+        s = strings[i];
+        // Collect any unsafeStatic values, and their following template strings
+        // so that we treat a run of template strings and unsafe static values as
+        // a single template string.
+        while (i < l &&
+            ((dynamicValue = values[i]),
+                (staticValue = unwrapStaticValue(dynamicValue))) !== undefined) {
+            s += staticValue + strings[++i];
+            hasStatics = true;
+        }
+        dynamicValues.push(dynamicValue);
+        staticStrings.push(s);
+        i++;
+    }
+    // If the last value isn't static (which would have consumed the last
+    // string), then we need to add the last string.
+    if (i === l) {
+        staticStrings.push(strings[l]);
+    }
+    if (hasStatics) {
+        const key = staticStrings.join('$$lit$$');
+        strings = stringsCache.get(key);
+        if (strings === undefined) {
+            // Beware: in general this pattern is unsafe, and doing so may bypass
+            // lit's security checks and allow an attacker to execute arbitrary
+            // code and inject arbitrary content.
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            staticStrings.raw = staticStrings;
+            stringsCache.set(key, (strings = staticStrings));
+        }
+        values = dynamicValues;
+    }
+    return coreTag(strings, ...values);
+};
+/**
+ * Interprets a template literal as an HTML template that can efficiently
+ * render to and update a container.
+ *
+ * Includes static value support from `lit-html/static.js`.
+ */
+const html = withStatic(_lit_html_js__WEBPACK_IMPORTED_MODULE_0__.html);
+/**
+ * Interprets a template literal as an SVG template that can efficiently
+ * render to and update a container.
+ *
+ * Includes static value support from `lit-html/static.js`.
+ */
+const svg = withStatic(_lit_html_js__WEBPACK_IMPORTED_MODULE_0__.svg);
+//# sourceMappingURL=static.js.map
+
+/***/ }),
+
 /***/ "./node_modules/lit/decorators.js":
 /*!****************************************!*\
   !*** ./node_modules/lit/decorators.js ***!
@@ -12598,6 +16153,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/lit/directives/ref.js":
+/*!********************************************!*\
+  !*** ./node_modules/lit/directives/ref.js ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createRef": () => (/* reexport safe */ lit_html_directives_ref_js__WEBPACK_IMPORTED_MODULE_0__.createRef),
+/* harmony export */   "ref": () => (/* reexport safe */ lit_html_directives_ref_js__WEBPACK_IMPORTED_MODULE_0__.ref)
+/* harmony export */ });
+/* harmony import */ var lit_html_directives_ref_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-html/directives/ref.js */ "./node_modules/lit-html/development/directives/ref.js");
+
+//# sourceMappingURL=ref.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lit/directives/style-map.js":
 /*!**************************************************!*\
   !*** ./node_modules/lit/directives/style-map.js ***!
@@ -12612,6 +16186,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lit_html_directives_style_map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-html/directives/style-map.js */ "./node_modules/lit-html/development/directives/style-map.js");
 
 //# sourceMappingURL=style-map.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lit/directives/unsafe-html.js":
+/*!****************************************************!*\
+  !*** ./node_modules/lit/directives/unsafe-html.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "UnsafeHTMLDirective": () => (/* reexport safe */ lit_html_directives_unsafe_html_js__WEBPACK_IMPORTED_MODULE_0__.UnsafeHTMLDirective),
+/* harmony export */   "unsafeHTML": () => (/* reexport safe */ lit_html_directives_unsafe_html_js__WEBPACK_IMPORTED_MODULE_0__.unsafeHTML)
+/* harmony export */ });
+/* harmony import */ var lit_html_directives_unsafe_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-html/directives/unsafe-html.js */ "./node_modules/lit-html/development/directives/unsafe-html.js");
+
+//# sourceMappingURL=unsafe-html.js.map
 
 
 /***/ }),
@@ -12667,6 +16260,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lit_element_lit_element_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit-element/lit-element.js */ "./node_modules/lit-element/development/lit-element.js");
 
 //# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lit/static-html.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lit/static-html.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "html": () => (/* reexport safe */ lit_html_static_js__WEBPACK_IMPORTED_MODULE_0__.html),
+/* harmony export */   "literal": () => (/* reexport safe */ lit_html_static_js__WEBPACK_IMPORTED_MODULE_0__.literal),
+/* harmony export */   "svg": () => (/* reexport safe */ lit_html_static_js__WEBPACK_IMPORTED_MODULE_0__.svg),
+/* harmony export */   "unsafeStatic": () => (/* reexport safe */ lit_html_static_js__WEBPACK_IMPORTED_MODULE_0__.unsafeStatic),
+/* harmony export */   "withStatic": () => (/* reexport safe */ lit_html_static_js__WEBPACK_IMPORTED_MODULE_0__.withStatic)
+/* harmony export */ });
+/* harmony import */ var lit_html_static_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-html/static.js */ "./node_modules/lit-html/development/static.js");
+
+//# sourceMappingURL=static-html.js.map
 
 
 /***/ })
@@ -12767,88 +16382,76 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!*************************************!*\
-  !*** ./src/components/form/form.ts ***!
-  \*************************************/
+/*!*****************************************!*\
+  !*** ./src/components/widget/widget.ts ***!
+  \*****************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Form": () => (/* binding */ Form)
+/* harmony export */   "Widget": () => (/* binding */ Widget)
 /* harmony export */ });
-/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
-/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
-/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
-/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
-/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./styles */ "./src/components/form/styles.ts");
-/* harmony import */ var _form_inputs_form_inputs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../form-inputs/form-inputs */ "./src/components/form-inputs/form-inputs.ts");
-/* harmony import */ var _accordion_accordion__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../accordion/accordion */ "./src/components/accordion/accordion.ts");
-/* harmony import */ var _form_inputs_configs_constant__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../form-inputs/configs/constant */ "./src/components/form-inputs/configs/constant.ts");
-/* harmony import */ var _utils_other_event__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/other/event */ "./src/components/utils/other/event.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ "./src/components/widget/types.ts");
+
+
+class Widget {
+    constructor(config, parentElement = document.body) {
+        const widgetContainer = document.createElement('div');
+        widgetContainer.setAttribute('id', config.name);
+        if (config.style)
+            Object.keys(config.style).forEach(styleName => {
+                if (config.style)
+                    widgetContainer.style[styleName] = config.style[styleName];
+            });
+        parentElement.appendChild(widgetContainer);
+        checkTime(() => {
+            config.componentList.forEach(e => {
+                setTimeout(() => {
+                    if (!('name' in e))
+                        widgetContainer.appendChild(createElement(e));
+                    else
+                        new Widget(e, widgetContainer);
+                });
+            });
+        }, 'prepare components');
+    }
+}
+function checkTime(func, logName) {
+    const name = logName || Math.random().toString();
+    console.time(name);
+    func();
+    console.timeEnd(name);
+}
+function createElement(elConfig) {
+    const componentAttributeList = [];
+    _types__WEBPACK_IMPORTED_MODULE_1__.SelectorAttributes[elConfig.selector].elementProperties.forEach((v, k) => {
+        if (!v.state)
+            componentAttributeList.push(k.toString());
+    });
+    const el = document.createElement(elConfig.selector);
+    if (elConfig.attributes) {
+        Object.keys(elConfig.attributes)
+            .filter(attr => componentAttributeList.includes(attr))
+            .forEach(attr => el.setAttribute(attr, elConfig.attributes && elConfig.attributes[attr] || ''));
+    }
+    return el;
+}
+const widgetConf = {
+    name: 'widget', style: { gridTemplateColumns: '1fr' },
+    componentList: [
+        {
+            name: 'row1',
+            componentList: [
+                { selector: _shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Input, attributes: { initInputValue: 'some text' } },
+                { selector: _shared_types__WEBPACK_IMPORTED_MODULE_0__.Selector.Action }
+            ],
+            style: { display: 'flex', justifyContent: 'space-between' }
+        }
+    ]
 };
-
-
-
-
-
-
-
-
-
-const tagName = _shared_types__WEBPACK_IMPORTED_MODULE_2__.Selector.Form;
-let Form = class Form extends lit__WEBPACK_IMPORTED_MODULE_0__.LitElement {
-    render() {
-        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
-            <form class="form-container">
-                ${this.config?.groups?.map((group) => group.useAccordionWrapper
-            ? lit__WEBPACK_IMPORTED_MODULE_0__.html `
-                              <tsc-accordion>
-                                  <div slot="title">${group.title}</div>
-                                  <div slot="content" class="accordion-content">
-                                      ${this.getInputsTemplate(group)}
-                                  </div>
-                              </tsc-accordion>
-                          `
-            : this.getInputsTemplate(group))}
-            </form>
-        `;
-    }
-    getInputsTemplate(inputsConfig) {
-        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
-            <tsc-form-inputs
-                .formFields=${inputsConfig.fields}
-                .columns=${inputsConfig.columns ??
-            this.config?.defaultColumns ??
-            0}
-                .columnsTmplate=${inputsConfig.columnsTemplate ||
-            this.config?.defaultColumnsTemplate ||
-            ''}
-                .rowsTmplate=${inputsConfig.rowsTemplate ||
-            this.config?.defaultRowsTemplate ||
-            ''}
-                @form-change=${(event) => { event.stopImmediatePropagation(); this.formChange(event.detail); }}
-            >
-            </tsc-form-inputs>
-        `;
-    }
-    formChange(detail) {
-        this.dispatchEvent((0,_utils_other_event__WEBPACK_IMPORTED_MODULE_8__.createEvent)(_form_inputs_configs_constant__WEBPACK_IMPORTED_MODULE_7__.formChangeEventName, { detail }));
-    }
-};
-Form.styles = _styles__WEBPACK_IMPORTED_MODULE_4__.stylesForm;
-__decorate([
-    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)()
-], Form.prototype, "config", void 0);
-Form = __decorate([
-    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_3__.customElementRegistry)(tagName)
-], Form);
-
+new Widget(widgetConf);
 
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=form.bundle.js.map
+//# sourceMappingURL=widget.bundle.js.map

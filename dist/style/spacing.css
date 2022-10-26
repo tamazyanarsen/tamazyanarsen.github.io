@@ -2,6 +2,7 @@
   --base-space: 4px;
   --space-1: calc(var(--base-space) / 4);
   --space-4: var(--base-space);
+  --space-5: calc(var(--base-space) * 1.25);
   --space-6: calc(var(--base-space) / 2 * 3);
   --space-8: calc(var(--base-space) * 2);
   --space-10: calc(var(--base-space) / 2 * 5);
@@ -13,5 +14,7 @@
   --space-24: calc(var(--base-space) * 6);
   --space-28: calc(var(--base-space) * 7);
   --space-32: calc(var(--base-space) * 8);
+  --space-40: calc(var(--base-space) * 10);
   --space-76: calc(var(--base-space) * 19);
+  --space-152: calc(var(--base-space) * 38);
 }

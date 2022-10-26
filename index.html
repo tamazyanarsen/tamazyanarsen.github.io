@@ -1,140 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <base href="." />
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Lit App</title>
-    <link rel="stylesheet" href="dist/style/style.css" />
+    <head>
+        <base href="." />
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vite + Lit App</title>
+        <link rel="stylesheet" href="dist/style/style.css" />
 
-    <script type="module" src="dist/input.bundle.js"></script>
-    <script type="module" src="dist/dropdown.bundle.js"></script>
-    <script type="module" src="dist/switch.bundle.js"></script>
-    <script type="module" src="dist/checkbox.bundle.js"></script>
-    <script type="module" src="dist/button.bundle.js"></script>
-    <script type="module" src="dist/icon-button.bundle.js"></script>
-    <script type="module" src="dist/radiogroup.bundle.js"></script>
-    <script type="module" src="dist/action.bundle.js"></script>
-    <script type="module" src="dist/spinner.bundle.js"></script>
-    <script type="module" src="dist/progressBar.bundle.js"></script>
-    <script type="module" src="dist/tabBar.bundle.js"></script>
-    <script type="module" src="dist/accordion.bundle.js"></script>
-    <script type="module" src="dist/table.bundle.js"></script>
-    <script type="module" src="dist/calendar.bundle.js"></script>
-    <script type="module" src="dist/form.bundle.js"></script>
-  </head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+            rel="stylesheet"
+        />
 
-  <body>
-    <h3>Table</h3>
-    <tsc-table></tsc-table>
-    <script>
-      const el = document.querySelector("tsc-table");
-      const columns = [
-        {
-          label: "Название",
-          itemProperty: "name",
-          type: 0,
-          textBackground: "red",
-          textColor: "blue",
-          iconPosition: 2,
-          width: "200px",
-        },
-        {
-          label: "Возраст",
-          itemProperty: "age",
-          type: 5,
-          listOptions: [
-            { label: "вариант 1", value: "val1" },
-            { label: "вариант 2", value: "val2" },
-          ],
-          listInitOption: "val2",
-          textBackground: "green",
-          textColor: "orange",
-          iconPosition: 2,
-        },
-      ];
-      const items = new Array(20).fill(1).map((e, index) => ({
-        name: `name${index}`,
-        age: Math.round(Math.random() * 100),
-      }));
-      el.setAttribute("columns", JSON.stringify(columns));
-      el.setAttribute("items", JSON.stringify(items));
-    </script>
+        <script type="module" src="dist/input.bundle.js"></script>
+        <script type="module" src="dist/dropdown.bundle.js"></script>
+        <script type="module" src="dist/switch.bundle.js"></script>
+        <script type="module" src="dist/checkbox.bundle.js"></script>
+        <script type="module" src="dist/button.bundle.js"></script>
+        <script type="module" src="dist/icon-button.bundle.js"></script>
+        <script type="module" src="dist/radiogroup.bundle.js"></script>
+        <script type="module" src="dist/action.bundle.js"></script>
+        <script type="module" src="dist/spinner.bundle.js"></script>
+        <script type="module" src="dist/progressBar.bundle.js"></script>
+        <script type="module" src="dist/tabBar.bundle.js"></script>
+        <script type="module" src="dist/accordion.bundle.js"></script>
+        <script type="module" src="dist/table.bundle.js"></script>
+        <script type="module" src="dist/calendar.bundle.js"></script>
+        <script type="module" src="dist/form.bundle.js"></script>
+        <script type="module" src="dist/form-inputs.bundle.js"></script>
+        <script type="module" src="dist/input-calendar.bundle.js"></script>
+        <script type="module" src="dist/widget.bundle.js"></script>
+    </head>
 
-    <h3>Accordion</h3>
-    <tsc-accordion>
-      <div slot="title">some title</div>
-      <div slot="content">some content</div>
-    </tsc-accordion>
+    <body>
+        <h3>Table</h3>
+        <tsc-table></tsc-table>
+        <script type="module" src="dist/test/table-test-config.js"></script>
 
-    <h3>Tab-bar</h3>
-    <tsc-tab-bar></tsc-tab-bar>
 
-    <h3>Progress-bar</h3>
-    <div style="width: 400px">
-      <tsc-progress-bar></tsc-progress-bar>
-    </div>
+        <h3>Add Item Modal</h3>
+        <tsc-table id="add-table"></tsc-table>
+        <tsc-modal-form id='add-modal'></tsc-modal-form>
+        <script type="module" src="dist/test/modal-form-test-config.js"></script>
 
-    <h3>Spinner</h3>
-    <tsc-spinner></tsc-spinner>
 
-    <h3>RadioGroup</h3>
-    <tsc-radio-group
-      grid-rows="1fr"
-      grid-columns="1fr 1fr"
-      name="some-name"
-    ></tsc-radio-group>
+        <h3>Paginator</h3>
+        <tsc-paginator></tsc-paginator>
+        <script type="module" src="dist/test/paginator-test-config.js"></script>
 
-    <h3>Input</h3>
-    <tsc-input></tsc-input>
+        <h3>Accordion</h3>
+        <tsc-accordion>
+            <div slot="title">some title</div>
+            <div slot="content">some content</div>
+        </tsc-accordion>
 
-    <h3>Dropdown</h3>
-    <tsc-dropdown></tsc-dropdown>
+        <h3>Tab-bar</h3>
+        <tsc-tab-bar></tsc-tab-bar>
 
-    <h3>Switch</h3>
-    <tsc-switch></tsc-switch>
+        <h3>Progress-bar</h3>
+        <div style="width: 400px">
+            <tsc-progress-bar></tsc-progress-bar>
+        </div>
 
-    <h3>Checkbox</h3>
-    <tsc-checkbox text="some text"></tsc-checkbox>
+        <h3>Spinner</h3>
+        <tsc-spinner></tsc-spinner>
 
-    <h3>Button</h3>
-    <tsc-button size="XS" text="Привет Мир!"></tsc-button>
+        <h3>RadioGroup</h3>
+        <tsc-radio-group
+            grid-rows="1fr"
+            grid-columns="1fr 1fr"
+            name="some-name"
+        ></tsc-radio-group>
 
-    <h3>Icon-button</h3>
-    <div style="display: flex; gap: 1em">
-      <tsc-icon-button
-        size="XS"
-        iconUrl="/assets/images/calendar.svg"
-      ></tsc-icon-button>
-      <tsc-icon-button size="XS" style-type="Round"></tsc-icon-button>
-    </div>
+        <h3>Input</h3>
+        <tsc-input></tsc-input>
 
-    <h3>Action</h3>
-    <div style="display: flex; flex-direction: row; position: relative">
-      <tsc-action id="action">
-        <tsc-action
-          id="action2"
-          slot="menu1"
-          style="position: absolute; left: 100%"
-        >
-          <tsc-action
-            id="action4"
-            slot="menu1_menu1"
-            style="position: absolute; left: 100%"
-          >
-          </tsc-action>
-        </tsc-action>
-        <tsc-action id="action3" slot="menu2"></tsc-action>
-      </tsc-action>
-    </div>
-    <script type="module" src="dist/test/action-test-config.js"></script>
+        <h3>Dropdown</h3>
+        <tsc-dropdown></tsc-dropdown>
 
-    <h3>Single Calendar</h3>
-    <tsc-calendar id="calendar"></tsc-calendar>
+        <h3>Switch</h3>
+        <tsc-switch></tsc-switch>
 
-    <h3>Form Generator</h3>
-    <tsc-form id="form" columns="3"></tsc-form>
-    <script type="module" src="dist/test/form-test-config.js"></script>
-  </body>
+        <h3>Checkbox</h3>
+        <tsc-checkbox text="some text"></tsc-checkbox>
+
+        <h3>Button</h3>
+        <tsc-button size="XS" text="Привет Мир!"></tsc-button>
+
+        <h3>Icon-button</h3>
+        <div style="display: flex; gap: 1em">
+            <tsc-icon-button
+                size="XS"
+                iconUrl="/assets/images/calendar.svg"
+            ></tsc-icon-button>
+            <tsc-icon-button size="XS" style-type="Round"></tsc-icon-button>
+        </div>
+
+        <h3>Action</h3>
+        <div style="display: flex; flex-direction: row; position: relative">
+            <tsc-action id="action">
+                <tsc-action
+                    id="action2"
+                    slot="menu1"
+                    style="position: absolute; left: 100%"
+                >
+                    <tsc-action
+                        id="action4"
+                        slot="menu1_menu1"
+                        style="position: absolute; left: 100%"
+                    >
+                    </tsc-action>
+                </tsc-action>
+                <tsc-action id="action3" slot="menu2"></tsc-action>
+            </tsc-action>
+        </div>
+        <script type="module" src="dist/test/action-test-config.js"></script>
+
+        <h3>Single Calendar</h3>
+        <tsc-calendar id="calendar"></tsc-calendar>
+
+        <h3>Form Generator</h3>
+        <div class="card-container">
+            <tsc-form id="form"></tsc-form>
+        </div>
+        <script type="module" src="dist/test/form-test-config.js"></script>
+
+        <h3>Input Calendar</h3>
+        <tsc-input-calendar></tsc-input-calendar>
+
+        <h3>Message</h3>
+        <tsc-message></tsc-message>
+        <script type="module" src="dist/test/message-test-config.js"></script>
+    </body>
 </html>

@@ -426,6 +426,43 @@ const stylesBase = [
 
 /***/ }),
 
+/***/ "./src/components/input-number/style.ts":
+/*!**********************************************!*\
+  !*** ./src/components/input-number/style.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "inputNumberStyles": () => (/* binding */ inputNumberStyles)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var _base_input_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../base/input/style */ "./src/components/base/input/style.ts");
+
+
+const inputNumberStyles = [
+    _base_input_style__WEBPACK_IMPORTED_MODULE_1__.stylesBase,
+    lit__WEBPACK_IMPORTED_MODULE_0__.css `
+        .xs-input #input {
+            padding: var(--space-6) var(--space-6);
+            text-align: center;
+        }
+
+        #input::-webkit-outer-spin-button,
+        #input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #input[type=number] {
+            -moz-appearance: textfield;
+        }
+    `
+];
+
+
+/***/ }),
+
 /***/ "./src/components/utils/css/border-radius.ts":
 /*!***************************************************!*\
   !*** ./src/components/utils/css/border-radius.ts ***!
@@ -698,6 +735,25 @@ const shadowCSS = lit__WEBPACK_IMPORTED_MODULE_0__.css `
 
 /***/ }),
 
+/***/ "./src/components/utils/directives/isVisible.ts":
+/*!******************************************************!*\
+  !*** ./src/components/utils/directives/isVisible.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isVisible": () => (/* binding */ isVisible)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+/* harmony import */ var lit_directives_when_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/directives/when.js */ "./node_modules/lit/directives/when.js");
+
+
+const isVisible = (value, htmlTemplate, defaultTemplate) => lit__WEBPACK_IMPORTED_MODULE_0__.html `${(0,lit_directives_when_js__WEBPACK_IMPORTED_MODULE_1__.when)(value, () => htmlTemplate, () => defaultTemplate || '')}`;
+
+
+/***/ }),
+
 /***/ "./src/components/utils/other/custom-element.decorator.ts":
 /*!****************************************************************!*\
   !*** ./src/components/utils/other/custom-element.decorator.ts ***!
@@ -735,6 +791,96 @@ const createEvent = (eventName, payload) => new CustomEvent(eventName, {
     ...payload?.eventOption,
     detail: payload?.detail,
 });
+
+
+/***/ }),
+
+/***/ "./src/components/utils/other/icons.ts":
+/*!*********************************************!*\
+  !*** ./src/components/utils/other/icons.ts ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "arrowIcon": () => (/* binding */ arrowIcon),
+/* harmony export */   "calendarIcon": () => (/* binding */ calendarIcon),
+/* harmony export */   "clearIcon": () => (/* binding */ clearIcon),
+/* harmony export */   "closeIcon": () => (/* binding */ closeIcon),
+/* harmony export */   "leftArrowIcon": () => (/* binding */ leftArrowIcon),
+/* harmony export */   "leftDoubleArrowIcon": () => (/* binding */ leftDoubleArrowIcon),
+/* harmony export */   "rightArrowIcon": () => (/* binding */ rightArrowIcon),
+/* harmony export */   "rightDoubleArrowIcon": () => (/* binding */ rightDoubleArrowIcon),
+/* harmony export */   "smallArrowIcon": () => (/* binding */ smallArrowIcon),
+/* harmony export */   "warningIcon": () => (/* binding */ warningIcon)
+/* harmony export */ });
+/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
+
+const warningIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_17396_8290)">
+            <circle cx="10.0002" cy="10" r="8.33333" stroke="#F5A700" stroke-width="1.66667" />
+            <path d="M10 5L10 11.6667M10 15L10 13.3333" stroke="#F5A700" stroke-width="1.66667" />
+        </g>
+        <defs>
+            <clipPath id="clip0_17396_8290">
+                <rect width="20" height="20" fill="white" />
+            </clipPath>
+        </defs>
+    </svg>
+`;
+const calendarIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.5 7.45837V4.16671C17.5 3.70647 17.1269 3.33337 16.6667 3.33337H14.1667M17.5 7.45837H2.5M17.5 7.45837V16.6667C17.5 17.1269 17.1269 17.5 16.6667 17.5H3.33333C2.8731 17.5 2.5 17.1269 2.5 16.6667V7.45837M2.5 7.45837V4.16671C2.5 3.70647 2.8731 3.33337 3.33333 3.33337H5.83333M5.83333 3.33337V0.833374M5.83333 3.33337H14.1667M14.1667 3.33337V0.833374"
+              stroke="#99A5B3" stroke-width="1.66667" />
+    </svg>
+`;
+const closeIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.6568 6.34314L12 12M12 12L6.34314 17.6568M12 12L17.6568 17.6568M12 12L6.34314 6.34314" stroke-width="2"/>
+    </svg>
+`;
+const arrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.5 5.83337L10 13.3334L17.5 5.83337" stroke="#C0C8D0" stroke-width="2" />
+    </svg>
+`;
+const smallArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M8.00021 12.2761L14.4716 5.80472L13.5288 4.86191L8.00021 10.3905L2.47162 4.86191L1.52881 5.80472L8.00021 12.2761Z"
+            fill="#788694"
+        />
+    </svg>
+`;
+const clearIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.714 1.28595L6 6M6 6L1.28595 10.714M6 6L10.714 10.714M6 6L1.28595 1.28595"
+                stroke="#C0C8D0" stroke-width="2"/>
+    </svg>
+`;
+const leftDoubleArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 14L8 8L14 2" stroke="#788694" stroke-width="1.33333"/>
+        <path d="M8 14L2 8L8 2" stroke="#788694" stroke-width="1.33333"/>
+    </svg>
+`;
+const leftArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11.3333 14L5.33325 8L11.3333 2" stroke="#788694" stroke-width="1.33333"/>
+    </svg>
+`;
+const rightDoubleArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 14L8 8L2 2" stroke="#788694" stroke-width="1.33333"/>
+        <path d="M8 14L14 8L8 2" stroke="#788694" stroke-width="1.33333"/>
+    </svg>
+`;
+const rightArrowIcon = lit__WEBPACK_IMPORTED_MODULE_0__.html `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.66675 14L10.6667 8L4.66675 2" stroke="#788694" stroke-width="1.33333"/>
+    </svg>
+`;
 
 
 /***/ }),
@@ -3142,119 +3288,25 @@ const classMap = (0,_directive_js__WEBPACK_IMPORTED_MODULE_1__.directive)(ClassM
 
 /***/ }),
 
-/***/ "./node_modules/lit-html/development/directives/style-map.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/lit-html/development/directives/style-map.js ***!
-  \*******************************************************************/
+/***/ "./node_modules/lit-html/development/directives/when.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/lit-html/development/directives/when.js ***!
+  \**************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "styleMap": () => (/* binding */ styleMap)
+/* harmony export */   "when": () => (/* binding */ when)
 /* harmony export */ });
-/* harmony import */ var _lit_html_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lit-html.js */ "./node_modules/lit-html/development/lit-html.js");
-/* harmony import */ var _directive_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../directive.js */ "./node_modules/lit-html/development/directive.js");
 /**
  * @license
- * Copyright 2018 Google LLC
+ * Copyright 2021 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-
-class StyleMapDirective extends _directive_js__WEBPACK_IMPORTED_MODULE_1__.Directive {
-    constructor(partInfo) {
-        var _a;
-        super(partInfo);
-        if (partInfo.type !== _directive_js__WEBPACK_IMPORTED_MODULE_1__.PartType.ATTRIBUTE ||
-            partInfo.name !== 'style' ||
-            ((_a = partInfo.strings) === null || _a === void 0 ? void 0 : _a.length) > 2) {
-            throw new Error('The `styleMap` directive must be used in the `style` attribute ' +
-                'and must be the only part in the attribute.');
-        }
-    }
-    render(styleInfo) {
-        return Object.keys(styleInfo).reduce((style, prop) => {
-            const value = styleInfo[prop];
-            if (value == null) {
-                return style;
-            }
-            // Convert property names from camel-case to dash-case, i.e.:
-            //  `backgroundColor` -> `background-color`
-            // Vendor-prefixed names need an extra `-` appended to front:
-            //  `webkitAppearance` -> `-webkit-appearance`
-            // Exception is any property name containing a dash, including
-            // custom properties; we assume these are already dash-cased i.e.:
-            //  `--my-button-color` --> `--my-button-color`
-            prop = prop
-                .replace(/(?:^(webkit|moz|ms|o)|)(?=[A-Z])/g, '-$&')
-                .toLowerCase();
-            return style + `${prop}:${value};`;
-        }, '');
-    }
-    update(part, [styleInfo]) {
-        const { style } = part.element;
-        if (this._previousStyleProperties === undefined) {
-            this._previousStyleProperties = new Set();
-            for (const name in styleInfo) {
-                this._previousStyleProperties.add(name);
-            }
-            return this.render(styleInfo);
-        }
-        // Remove old properties that no longer exist in styleInfo
-        // We use forEach() instead of for-of so that re don't require down-level
-        // iteration.
-        this._previousStyleProperties.forEach((name) => {
-            // If the name isn't in styleInfo or it's null/undefined
-            if (styleInfo[name] == null) {
-                this._previousStyleProperties.delete(name);
-                if (name.includes('-')) {
-                    style.removeProperty(name);
-                }
-                else {
-                    // Note reset using empty string (vs null) as IE11 does not always
-                    // reset via null (https://developer.mozilla.org/en-US/docs/Web/API/ElementCSSInlineStyle/style#setting_styles)
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    style[name] = '';
-                }
-            }
-        });
-        // Add or update properties
-        for (const name in styleInfo) {
-            const value = styleInfo[name];
-            if (value != null) {
-                this._previousStyleProperties.add(name);
-                if (name.includes('-')) {
-                    style.setProperty(name, value);
-                }
-                else {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    style[name] = value;
-                }
-            }
-        }
-        return _lit_html_js__WEBPACK_IMPORTED_MODULE_0__.noChange;
-    }
+function when(condition, trueCase, falseCase) {
+    return condition ? trueCase() : falseCase === null || falseCase === void 0 ? void 0 : falseCase();
 }
-/**
- * A directive that applies CSS properties to an element.
- *
- * `styleMap` can only be used in the `style` attribute and must be the only
- * expression in the attribute. It takes the property names in the
- * {@link StyleInfo styleInfo} object and adds the property values as CSS
- * properties. Property names with dashes (`-`) are assumed to be valid CSS
- * property names and set on the element's style object using `setProperty()`.
- * Names without dashes are assumed to be camelCased JavaScript property names
- * and set on the element's style object using property assignment, allowing the
- * style object to translate JavaScript-style names to CSS property names.
- *
- * For example `styleMap({backgroundColor: 'red', 'border-top': '5px', '--size':
- * '0'})` sets the `background-color`, `border-top` and `--size` properties.
- *
- * @param styleInfo
- * @see {@link https://lit.dev/docs/templates/directives/#stylemap styleMap code samples on Lit.dev}
- */
-const styleMap = (0,_directive_js__WEBPACK_IMPORTED_MODULE_1__.directive)(StyleMapDirective);
-//# sourceMappingURL=style-map.js.map
+//# sourceMappingURL=when.js.map
 
 /***/ }),
 
@@ -4804,19 +4856,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/lit/directives/style-map.js":
-/*!**************************************************!*\
-  !*** ./node_modules/lit/directives/style-map.js ***!
-  \**************************************************/
+/***/ "./node_modules/lit/directives/when.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lit/directives/when.js ***!
+  \*********************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "styleMap": () => (/* reexport safe */ lit_html_directives_style_map_js__WEBPACK_IMPORTED_MODULE_0__.styleMap)
+/* harmony export */   "when": () => (/* reexport safe */ lit_html_directives_when_js__WEBPACK_IMPORTED_MODULE_0__.when)
 /* harmony export */ });
-/* harmony import */ var lit_html_directives_style_map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-html/directives/style-map.js */ "./node_modules/lit-html/development/directives/style-map.js");
+/* harmony import */ var lit_html_directives_when_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-html/directives/when.js */ "./node_modules/lit-html/development/directives/when.js");
 
-//# sourceMappingURL=style-map.js.map
+//# sourceMappingURL=when.js.map
 
 
 /***/ }),
@@ -4916,20 +4968,23 @@ __webpack_require__.r(__webpack_exports__);
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***************************************!*\
-  !*** ./src/components/input/input.ts ***!
-  \***************************************/
+/*!*****************************************************!*\
+  !*** ./src/components/input-number/input-number.ts ***!
+  \*****************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Input": () => (/* binding */ Input)
+/* harmony export */   "InputNumber": () => (/* binding */ InputNumber)
 /* harmony export */ });
 /* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ "./node_modules/lit/index.js");
-/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
-/* harmony import */ var lit_directives_style_map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/directives/style-map.js */ "./node_modules/lit/directives/style-map.js");
+/* harmony import */ var lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit/decorators.js */ "./node_modules/lit/decorators.js");
+/* harmony import */ var lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lit/directives/class-map.js */ "./node_modules/lit/directives/class-map.js");
 /* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/types */ "./src/shared/types.ts");
 /* harmony import */ var _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../base/input/config/types */ "./src/components/base/input/config/types.ts");
 /* harmony import */ var _base_input_input_base__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../base/input/input-base */ "./src/components/base/input/input-base.ts");
-/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/directives/isVisible */ "./src/components/utils/directives/isVisible.ts");
+/* harmony import */ var _utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/other/custom-element.decorator */ "./src/components/utils/other/custom-element.decorator.ts");
+/* harmony import */ var _utils_other_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/other/icons */ "./src/components/utils/other/icons.ts");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./style */ "./src/components/input-number/style.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4943,59 +4998,78 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-const tagName = _shared_types__WEBPACK_IMPORTED_MODULE_3__.Selector.Input;
-let Input = class Input extends _base_input_input_base__WEBPACK_IMPORTED_MODULE_5__.InputBase {
+
+
+
+let InputNumber = class InputNumber extends _base_input_input_base__WEBPACK_IMPORTED_MODULE_5__.InputBase {
+    constructor() {
+        super(...arguments);
+        this.step = '1';
+        this.min = '1';
+        this.max = '1';
+    }
     get clearButton() {
         return lit__WEBPACK_IMPORTED_MODULE_0__.html `
             <div class="clear-button"
-                 @click=${this.clearInputValue}
-                 style=${(0,lit_directives_style_map_js__WEBPACK_IMPORTED_MODULE_2__.styleMap)({
-            display: this.clearButtonVisible ? 'flex' : 'none',
-        })}>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10.714 1.28595L6 6M6 6L1.28595 10.714M6 6L10.714 10.714M6 6L1.28595 1.28595"
-                          stroke="#C0C8D0" stroke-width="2"/>
-                </svg>
+                 @click=${this.clearInputValue}>
+                ${_utils_other_icons__WEBPACK_IMPORTED_MODULE_8__.clearIcon}
             </div>
         `;
     }
-    render() {
+    get inputTemplate() {
         return lit__WEBPACK_IMPORTED_MODULE_0__.html `
-            <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
-            'input-container': true,
-            [this.classSettings[this.size].className]: true,
-            'disabled': this.disabled
-        })}>
-                <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
-            'input-wrapper': true,
-            disabled: this.disabled
-        })}">
-                    ${this.placeHolderVisible && (this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.M || this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L) ? lit__WEBPACK_IMPORTED_MODULE_0__.html `
-                        <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
-            [this.classSettings[this.size].placeholder]: true,
-            'input-placeholder': true
-        })}">${this.placeholder}
-                        </div>` : ''}
-                    <input @focus="${this.focusInput}"
-                           @blur="${this.blurInput}"
-                           .name=${this.name}
-                           @input=${this.editInput}
-                           @change=${this.changeValue}
-                           ?disabled=${this.disabled}
-                           id="input"
-                           class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
+        <input @focus="${this.focusInput}"
+                @blur="${this.blurInput}"
+                .name=${this.name}
+                @input=${this.editInput}
+                @change=${this.changeValue}
+                ?disabled=${this.disabled}
+                type="number"
+                .step=${this.step}
+                .min=${this.min}
+                .max=${this.max}
+                id="input"
+                class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
             [this.classSettings[this.size].inputText]: true,
             outline: this.outline,
             success: this.success,
             error: this.error,
             'empty': !this.input?.value
         })}
-                           .placeholder=${this.placeHolderVisible ? '' : this.placeholder}
-                           .value=${this.value}
-                    />
-                    ${this.clearButton}
+                .placeholder=${this.placeHolderVisible ? '' : this.placeholder}
+                .value=${this.value}
+        />
+        `;
+    }
+    editInput() {
+        const inputValue = this.input?.value || '';
+        if (this.input && ((Number(inputValue) > Number(this.max)) || (Number(inputValue) < Number(this.min))) && inputValue !== '') {
+            this.input.value = this.value;
+            return;
+        }
+        super.editInput();
+    }
+    render() {
+        return lit__WEBPACK_IMPORTED_MODULE_0__.html `
+            <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+            'input-container': true,
+            [this.classSettings[this.size].className]: true,
+            'disabled': this.disabled
+        })}>
+                <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+            'input-wrapper': true,
+            disabled: this.disabled
+        })}">
+                ${this.placeHolderVisible && (this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.M || this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L) ? lit__WEBPACK_IMPORTED_MODULE_0__.html `
+                <div class="${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+            [this.classSettings[this.size].placeholder]: true,
+            'input-placeholder': true
+        })}">${this.placeholder}
+                </div>` : ''}
+                ${this.inputTemplate}
+                ${(0,_utils_directives_isVisible__WEBPACK_IMPORTED_MODULE_6__.isVisible)(this.clearButtonExist && this.clearButtonVisible, this.clearButton)}
                 </div>
-                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_1__.classMap)({
+                <div class=${(0,lit_directives_class_map_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
             'subtitle-2': this.size !== _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L,
             'body-3': this.size === _base_input_config_types__WEBPACK_IMPORTED_MODULE_4__.Size.L,
             'additional-text': true,
@@ -5008,13 +5082,23 @@ let Input = class Input extends _base_input_input_base__WEBPACK_IMPORTED_MODULE_
         `;
     }
 };
-Input = __decorate([
-    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_6__.customElementRegistry)(tagName)
-], Input);
+InputNumber.styles = _style__WEBPACK_IMPORTED_MODULE_9__.inputNumberStyles;
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], InputNumber.prototype, "step", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], InputNumber.prototype, "min", void 0);
+__decorate([
+    (0,lit_decorators_js__WEBPACK_IMPORTED_MODULE_1__.property)({ type: String })
+], InputNumber.prototype, "max", void 0);
+InputNumber = __decorate([
+    (0,_utils_other_custom_element_decorator__WEBPACK_IMPORTED_MODULE_7__.customElementRegistry)(_shared_types__WEBPACK_IMPORTED_MODULE_3__.Selector.InputNumber)
+], InputNumber);
 
 
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=input.bundle.js.map
+//# sourceMappingURL=input-number.bundle.js.map
